@@ -22,8 +22,13 @@ Une icône **INVENThair** apparaît sur le Bureau et dans le menu des applicatio
 | `./lancer.sh` | Ce que fait le double-clic |
 | `./stop.sh` | Arrête le serveur lancé depuis le Bureau |
 | `./desinstaller.sh` | Retire les raccourcis (la base et les sauvegardes restent) |
+| `./backup.sh` | Copie datée de la base dans `backups/` (même appli ouverte) |
 
 Les données sont dans `inventhair.db`, les journaux dans `logs/inventhair.log`.
+
+### Envoi de la liste d'achat par mail
+
+Copier `.env.example` en `.env` et remplir la partie SMTP avec les réglages de la messagerie qui enverra les mails, puis relancer l'appli (`./stop.sh` puis double-clic). Sans ces réglages, l'écran Liste d'achat indique que l'envoi n'est pas configuré ; le téléchargement CSV / PDF marche toujours.
 
 ## Développement
 
