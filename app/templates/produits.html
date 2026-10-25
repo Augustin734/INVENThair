@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block contenu %}
+<section class="entete-page">
+  <div class="pile" style="gap: 6px">
+    <h1 class="titre-page">Tous tes produits</h1>
+    <p class="sous-titre" id="resume">…</p>
+  </div>
+  <div class="ligne">
+    <button type="button" class="btn btn-primaire" id="bouton-nouveau">+ Nouveau produit</button>
+    <button type="button" class="btn btn-secondaire ombre" id="bouton-mouvement">Réception / sortie</button>
+  </div>
+</section>
+
+<nav class="onglets" aria-label="Produits actifs ou archivés">
+  <a href="/produits" id="onglet-actifs">Actifs <span class="pastille p-annule" id="nb-actifs">…</span></a>
+  <a href="/produits?onglet=archives" id="onglet-archives">Archivés <span class="pastille p-annule" id="nb-archives">…</span></a>
+</nav>
+
+<section class="carte carte-rose filtres" aria-label="Filtres">
+  <div class="etoile" aria-hidden="true"></div>
+  <div class="champ">
+    <label for="recherche" id="libelle-recherche">Je cherche…</label>
+    <input id="recherche" class="saisie" type="search" placeholder="gel, capsules, lime…" autocomplete="off">
+  </div>
+  <fieldset>
+    <legend class="etiquette">Ma catégorie, c'est :</legend>
+    <div class="ligne" style="gap: 8px" id="filtres-categories"></div>
+  </fieldset>
+</section>
+
+<section class="tableau-cadre" aria-labelledby="titre-tableau">
+  <h2 id="titre-tableau" class="sr">Liste des produits</h2>
+  <div class="tableau-defile">
+    <table class="tableau" id="tableau" style="min-width: 860px">
+      <thead id="tableau-tete"></thead>
+      <tbody id="tableau-corps" aria-busy="true"></tbody>
+    </table>
+  </div>
+  <div class="tableau-pied"><span id="compte" aria-live="polite"></span><a href="/produits?onglet=archives" id="lien-autre-onglet" style="font-weight: 900"></a></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/produits.js?v={{ version }}"></script>
+{% endblock %}

@@ -3,7 +3,7 @@
 import re
 from typing import Annotated, ClassVar, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, NaiveDatetime, StringConstraints, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, NaiveDatetime, StringConstraints, ValidationInfo, field_validator
 
 from app.models import StatutInventaire, TypeMouvement, Unite
 
@@ -26,12 +26,13 @@ class Modification(Entree):
 
     NON_NULS: ClassVar[tuple[str, ...]] = ()
 
-    @model_validator(mode="after")
-    def _refuser_null_sur_obligatoires(self):
-        for champ in self.NON_NULS:
-            if champ in self.model_fields_set and getattr(self, champ) is None:
-                raise ValueError(f"« {champ} » ne peut pas être vide.")
-        return self
+    @field_validator("*", mode="before")
+    @classmethod
+    def _refuser_null_sur_obligatoires(cls, valeur, info: ValidationInfo):
+        # Ne s'applique qu'aux champs envoyés : l'erreur est rattachée au bon champ.
+        if valeur is None and info.field_name in cls.NON_NULS:
+            raise ValueError("Ne peut pas être vide.")
+        return valeur
 
     def changements(self) -> dict:
         return self.model_dump(exclude_unset=True)

@@ -78,7 +78,9 @@ def test_renommer_vers_nom_existant_refuse(client):
 
 def test_modifier_nom_null_refuse(client):
     id_gels = _ids(client)["Gels"]
-    assert client.patch(f"{API}/{id_gels}", json={"nom": None}).status_code == 422
+    reponse = client.patch(f"{API}/{id_gels}", json={"nom": None})
+    assert reponse.status_code == 422
+    assert reponse.json()["erreur"]["details"] == {"nom": "Ne peut pas être vide."}
 
 
 def test_modifier_inconnue(client):

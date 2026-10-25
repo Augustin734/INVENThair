@@ -172,3 +172,139 @@ export function brancherFenetres(racine = document) {
 }
 
 export const lienProduit = (id) => `/produits/${id}`;
+
+/** Même règle que l'API : alerte ≤ seuil, à surveiller ≤ 1,5 × seuil. */
+export function statutDe(stock, seuil) {
+  if (stock <= seuil) return 'alerte';
+  if (stock <= 1.5 * seuil) return 'a_surveiller';
+  return 'en_forme';
+}
+
+/** Recherche sans casse ni accents (« ecrin » trouve « Écrin »). */
+export const normaliser = (texte) => (texte ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+
+const comparateurNoms = new Intl.Collator('fr', { sensitivity: 'base' });
+export const parNom = (a, b) => comparateurNoms.compare(a.nom, b.nom);
+
+// ---------- Fenêtres construites en JS ----------
+
+const ICONE_FERMER = () => {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '20');
+  svg.setAttribute('height', '20');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '3');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('aria-hidden', 'true');
+  const trait = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  trait.setAttribute('d', 'M6 6l12 12M18 6L6 18');
+  svg.append(trait);
+  return svg;
+};
+
+let compteurFenetres = 0;
+
+/**
+ * Ouvre une fenêtre modale à la charte. Renvoie { dialog, corps, pied, fermer }.
+ * Le <dialog> est retiré du DOM à la fermeture ; `surFermeture` est alors appelé.
+ */
+export function ouvrirFenetre({ titre, rubrique, description, etroite = false, classeCarte = '', surFermeture }) {
+  const idTitre = `fenetre-titre-${++compteurFenetres}`;
+  const corps = h('div', { class: 'pile', style: { gap: '18px' } });
+  const pied = h('div', { class: 'fenetre-pied' });
+  const dialog = h('dialog', { class: `cadre-fenetre${etroite ? ' etroit' : ''}`, 'aria-labelledby': idTitre },
+    h('section', { class: `fenetre ${classeCarte}` },
+      h('div', { class: 'etoile', 'aria-hidden': 'true' }),
+      h('div', { class: 'fenetre-tete' },
+        h('div', { class: 'pile' },
+          rubrique && h('span', { class: 'onglet-rubrique' }, rubrique),
+          h('h1', { id: idTitre }, titre),
+          description && h('p', {}, description)),
+        h('button', { type: 'button', class: 'fermer', 'aria-label': 'Fermer', 'data-fermer': true }, ICONE_FERMER())),
+      corps,
+      pied));
+  dialog.addEventListener('click', (e) => { if (e.target.closest('[data-fermer]')) dialog.close(); });
+  dialog.addEventListener('close', () => { dialog.remove(); surFermeture?.(); });
+  document.body.append(dialog);
+  dialog.showModal();
+  return { dialog, corps, pied, fermer: () => dialog.close() };
+}
+
+// ---------- Champs de formulaire ----------
+
+/** Champ étiqueté ; `nom` sert à retrouver le champ quand l'API renvoie une erreur dessus. */
+export function champ({ nom, libelle, obligatoire = false, controle, aide, classe = '' }) {
+  const id = controle.id || `champ-${nom}-${++compteurFenetres}`;
+  controle.id = id;
+  controle.name ||= nom;
+  const idErreur = `${id}-erreur`;
+  return h('div', { class: `champ ${classe}`, 'data-champ': nom },
+    h('label', { for: id }, libelle, obligatoire && h('span', { class: 'obligatoire' }, ' *')),
+    controle,
+    aide && h('p', { class: 'aide' }, aide),
+    h('p', { class: 'erreur-champ', id: idErreur, hidden: true }));
+}
+
+/** Remplace `el` à sa place par `fabrique(el)` (qui peut contenir `el` lui-même). */
+export function envelopper(el, fabrique) {
+  const parent = el.parentNode;
+  const suivant = el.nextSibling;
+  const nouveau = fabrique(el);
+  parent.insertBefore(nouveau, suivant);
+  return nouveau;
+}
+
+/** Saisie avec son unité à droite (« 100 ml »). */
+export const avecUnite = (controle, unite) => h('span', { class: 'avec-unite' }, controle, h('span', { class: 'unite' }, unite));
+
+export function effacerErreurs(racine) {
+  racine.querySelectorAll('[aria-invalid="true"]').forEach((el) => el.removeAttribute('aria-invalid'));
+  racine.querySelectorAll('.erreur-champ').forEach((el) => { el.hidden = true; el.textContent = ''; });
+}
+
+/** Dès que Maud corrige un champ en erreur, son message disparaît. */
+function effacerAuChangement(racine) {
+  if (racine.dataset.effacementBranche) return;
+  racine.dataset.effacementBranche = '1';
+  const effacer = (evenement) => {
+    const bloc = evenement.target.closest('[data-champ]');
+    if (!bloc) return;
+    bloc.querySelectorAll('[aria-invalid="true"]').forEach((el) => el.removeAttribute('aria-invalid'));
+    bloc.querySelectorAll('.erreur-champ').forEach((el) => { el.hidden = true; });
+  };
+  racine.addEventListener('input', effacer);
+  racine.addEventListener('change', effacer);
+}
+
+/** Place les erreurs de l'API sous les champs ; renvoie les messages qui n'ont pas trouvé de champ. */
+export function afficherErreurs(racine, erreur) {
+  effacerErreurs(racine);
+  effacerAuChangement(racine);
+  const restants = [];
+  for (const [nom, message] of Object.entries(erreur.details ?? {})) {
+    const bloc = racine.querySelector(`[data-champ="${CSS.escape(nom)}"]`);
+    if (!bloc || typeof message !== 'string') { if (typeof message === 'string') restants.push(message); continue; }
+    const controle = bloc.querySelector('input, select, textarea');
+    const zone = bloc.querySelector('.erreur-champ');
+    controle?.setAttribute('aria-invalid', 'true');
+    controle?.setAttribute('aria-describedby', zone.id);
+    zone.textContent = message;
+    zone.hidden = false;
+  }
+  const premier = racine.querySelector('[aria-invalid="true"]');
+  premier?.focus();
+  return premier ? restants : [erreur.message, ...restants];
+}
+
+/** Lit un nombre saisi (« 12,5 » accepté) ; vide → null ; texte invalide renvoyé tel quel pour que l'API le signale. */
+export function lireNombre(controle) {
+  const brut = controle.value.trim().replace(',', '.');
+  if (brut === '') return null;
+  const nombre = Number(brut);
+  return Number.isFinite(nombre) ? nombre : controle.value;
+}
+
+/** Saisie numérique qui accepte la virgule (type=number la refuse selon les navigateurs). */
+export const saisieNombre = (attributs = {}) => h('input', { class: 'saisie', type: 'text', inputmode: 'decimal', autocomplete: 'off', ...attributs });

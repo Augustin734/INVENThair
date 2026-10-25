@@ -230,6 +230,18 @@ Toujours le même format : `{"erreur": {"code": "STOCK_INSUFFISANT", "message": 
 
 Codes techniques renvoyés par le framework, hors règles métier : `METHODE_NON_AUTORISEE` (405), `ERREUR_INTERNE` (500, détail dans `logs/inventhair.log`, jamais dans la réponse).
 
+### Pages HTML
+
+Servies par FastAPI hors de `/api/v1` (absentes de `/docs`). Elles ne portent que la structure ; toutes les données passent par l'API, côté navigateur.
+
+| URL | Page | Maquette |
+| --- | --- | --- |
+| `/` | Accueil | `Main.dc.html` |
+| `/produits` (`?onglet=archives`, `?en_alerte=1`, `#nouveau`, `#mouvement`) | Produits, onglet Archivés, fenêtres | `Produits.dc.html`, `ProduitsArchives.html`, `ProduitFenetre.html`, `Mouvement.html`, `Categories.dc.html`, `Fournisseurs.html` |
+| `/produits/{id}` | Fiche produit | `FicheProduit.html` |
+| `/inventaire` (`?numero={id}` pour consulter) | Inventaire | `InventaireAccueil.html`, `Inventaire.dc.html`, `InventaireRecap.html` |
+| `/liste-achat` (`#envoyer`) | Liste d'achat | `ListeAchat.dc.html` |
+
 ## 5. Étapes
 
 1. Squelette : FastAPI, SQLite, modèles, initialisation de la base + catégories de départ, `start.sh`, `/health`, lancement de bureau (`install.sh`, `lancer.sh`, `stop.sh`, `desinstaller.sh`, `inventhair.desktop`).
