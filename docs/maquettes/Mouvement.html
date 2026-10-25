@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVENThair – Réception / sortie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquettes.css">
+<style>
+.sens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sens label { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 14px 18px; border-radius: 22px; border: 3px solid var(--encre); background: var(--blanc); cursor: pointer; }
+.sens input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.sens .nom { font-family: var(--police-titre); font-size: 26px; line-height: 1; }
+.sens .detail { font-size: 14px; font-weight: 800; }
+.sens .entree:has(input:checked) { background: var(--sapin); color: var(--blanc); box-shadow: 4px 4px 0 var(--encre); }
+.sens .sortie:has(input:checked) { background: var(--pivoine); color: var(--blanc); box-shadow: 4px 4px 0 var(--encre); }
+.sens label:has(input:focus-visible) { outline: 3px solid var(--pivoine); outline-offset: 3px; }
+.produit-choisi { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; background: var(--fond); border: 3px solid var(--prune); border-radius: 20px; padding: 12px 16px; }
+.apercu { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; background: var(--rose-pale); border-radius: 22px; padding: 16px 20px; font-variant-numeric: tabular-nums; }
+.apercu .chiffre { font-size: 34px; color: var(--prune); }
+@media (max-width: 640px) { .sens { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<!-- Maquette : fenêtre « Réception / sortie » (US5, US6). Ouverte depuis Produits (produit à choisir) ou depuis la fiche produit (produit pré-rempli). -->
+<div class="voile">
+
+<section class="fenetre etroite" role="dialog" aria-modal="true" aria-labelledby="titre-mvt">
+  <div class="etoile" aria-hidden="true"></div>
+  <div class="fenetre-tete">
+    <div class="pile">
+      <span class="onglet-rubrique">Arrivage</span>
+      <h1 id="titre-mvt">Réception / sortie</h1>
+      <p>Le stock est mis à jour dès que tu enregistres.</p>
+    </div>
+    <button type="button" class="fermer" aria-label="Fermer sans enregistrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+
+  <div class="champ">
+    <label for="m-produit">Produit</label>
+    <input id="m-produit" class="saisie" type="search" list="m-produits" value="Gel builder clair" autocomplete="off">
+    <datalist id="m-produits"><option value="Gel builder clair"><option value="Base coat caoutchouc"><option value="Top coat brillant"></datalist>
+    <div class="produit-choisi">
+      <span class="pastille p-categorie" style="background: #B01050; color: #FFFFFF">Gels</span>
+      <strong>Gel builder clair</strong>
+      <span class="texte-doux">Réf. GB-50 · en stock : 35 ml · seuil 50 ml</span>
+    </div>
+  </div>
+
+  <fieldset class="champ">
+    <legend class="etiquette">C'est…</legend>
+    <div class="sens" style="margin-top: 6px">
+      <label class="entree"><input type="radio" name="sens" value="entree" checked><span class="nom">Une entrée</span><span class="detail">Réception de commande, cadeau fournisseur…</span></label>
+      <label class="sortie"><input type="radio" name="sens" value="sortie"><span class="nom">Une sortie</span><span class="detail">Utilisation, perte, casse…</span></label>
+    </div>
+  </fieldset>
+
+  <div class="ligne" style="align-items: flex-start; gap: 18px 24px">
+    <div class="champ">
+      <label for="m-qte">Quantité</label>
+      <span class="avec-unite"><input id="m-qte" class="saisie" type="number" min="0" step="any" value="100"> ml</span>
+    </div>
+    <div class="champ" style="flex: 1 1 240px">
+      <label for="m-motif">Motif (facultatif)</label>
+      <input id="m-motif" class="saisie" type="text" value="Réception commande">
+      <div class="choix" role="group" aria-label="Motifs rapides">
+        <button type="button" class="btn btn-discret btn-petit" aria-pressed="true" style="background: var(--mauve); color: var(--blanc)">Réception commande</button>
+        <button type="button" class="btn btn-discret btn-petit" aria-pressed="false">Utilisation</button>
+        <button type="button" class="btn btn-discret btn-petit" aria-pressed="false">Perte</button>
+        <button type="button" class="btn btn-discret btn-petit" aria-pressed="false">Casse</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="apercu" aria-live="polite">
+    <span class="rubrique" style="color: var(--prune)">Aperçu</span>
+    <span><span class="chiffre">35</span> ml <span class="pastille p-alerte">Alerte !</span></span>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#430D2B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    <span class="sr">devient</span>
+    <span><span class="chiffre">135</span> ml <span class="pastille p-forme">En forme</span></span>
+  </div>
+
+  <div class="fenetre-pied">
+    <button type="button" class="btn btn-discret">Annuler</button>
+    <button type="button" class="btn btn-primaire">Enregistrer l'entrée</button>
+  </div>
+</section>
+
+<section class="fenetre etroite" aria-label="Exemples de messages">
+  <span class="etiquette-variante">Variante : messages après enregistrement</span>
+  <p class="msg msg-succes" role="status">C'est noté : +100 ml de Gel builder clair. Stock : 135 ml.</p>
+  <p class="msg msg-erreur" role="alert">Il ne reste que 35 ml de Gel builder clair : impossible d'en sortir 50 ml. Vérifie la quantité ou fais un inventaire.</p>
+  <p class="msg msg-erreur" role="alert">« Strass AB 2 mm » est archivé. Désarchive-le avant d'enregistrer un mouvement.</p>
+</section>
+
+</div>
+</body>
+</html>
