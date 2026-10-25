@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>INVENThair – Liste d'achat</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF0F6}
+a{color:#79365C}a:hover{color:#430D2B}
+.burst{clip-path:polygon(50% 0%,61% 12%,76% 5%,79% 21%,95% 22%,89% 37%,100% 50%,89% 63%,95% 78%,79% 79%,76% 95%,61% 88%,50% 100%,39% 88%,24% 95%,21% 79%,5% 78%,11% 63%,0% 50%,11% 37%,5% 22%,21% 21%,24% 5%,39% 12%)}
+.star{clip-path:polygon(50% 0%,62% 34%,98% 35%,69% 56%,79% 91%,50% 70%,21% 91%,31% 56%,2% 35%,38% 34%)}
+@media (max-width:640px){.wrap{padding:24px 16px !important}.logo{font-size:44px !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; font-family: 'Nunito', sans-serif; color: #270317; background: radial-gradient(circle at 100% 100%, #FCD4E6 0, #FCD4E6 220px, transparent 221px), radial-gradient(circle at 0% 0%, #FCD4E6 0, #FCD4E6 160px, transparent 161px), #FFF0F6">
+<div class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 40px 40px 64px; display: flex; flex-direction: column; gap: 28px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px">
+<div class="logo" style="font-family: 'Lilita One', sans-serif; font-size: 56px; line-height: 1; color: #FFFFFF; -webkit-text-stroke: 3px #430D2B; text-shadow: 5px 5px 0 #430D2B">INVENT<span style="color: #F6BE28">hair</span></div>
+<nav aria-label="Navigation principale" style="display: flex; flex-wrap: wrap; gap: 10px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Accueil</a>
+<a href="Produits.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Produits</a>
+<a href="Inventaire.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Inventaire</a>
+<a href="ListeAchat.dc.html" aria-current="page" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #79365C; color: #FFFFFF; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Liste d'achat</a>
+</nav>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: flex-end; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-size: 64px; line-height: 1; color: #FFFFFF; -webkit-text-stroke: 3px #430D2B; text-shadow: 5px 5px 0 #B01050">Ta liste de shopping</h1>
+<p style="margin: 0; font-weight: 800; font-size: 17px; color: #79365C">Générée le samedi 24 octobre 2026 · ajuste les quantités avant d'envoyer</p>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+
+<section style="background: #FFFFFF; border: 3px solid #B01050; border-radius: 26px; padding: 0 24px 16px">
+<h2 style="margin: -3px 0 8px; display: inline-block; background: #B01050; color: #FFFFFF; font-weight: 900; font-size: 18px; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 20px; border-radius: 0 0 16px 16px">Chez Grossiste A</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 14px 0; border-bottom: 2px dotted #F070A8">
+<span style="flex: 1 1 220px; font-weight: 900; font-size: 17px">Gel builder clair<span style="display: block; font-weight: 700; font-size: 13px; color: #79365C">Reste 35 ml · seuil 50 ml</span></span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800">Quantité <input type="number" value="100" style="font-family: inherit; width: 90px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #79365C; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"> ml</label>
+<button type="button" aria-label="Retirer Gel builder clair de la liste" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #79365C; background: #FFFFFF; color: #79365C; display: inline-flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 14px 0">
+<span style="flex: 1 1 220px; font-weight: 900; font-size: 17px">Limes 180/240<span style="display: block; font-weight: 700; font-size: 13px; color: #79365C">Reste 12 pcs · seuil 20 pcs</span></span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800">Quantité <input type="number" value="50" style="font-family: inherit; width: 90px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #79365C; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"> pcs</label>
+<button type="button" aria-label="Retirer Limes 180/240 de la liste" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #79365C; background: #FFFFFF; color: #79365C; display: inline-flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 3px solid #430D2B; border-radius: 26px; padding: 0 24px 16px">
+<h2 style="margin: -3px 0 8px; display: inline-block; background: #430D2B; color: #FFFFFF; font-weight: 900; font-size: 18px; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 20px; border-radius: 0 0 16px 16px">Chez Grossiste B</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 14px 0; border-bottom: 2px dotted #CCA7BC">
+<span style="flex: 1 1 220px; font-weight: 900; font-size: 17px">Top coat brillant<span style="display: block; font-weight: 700; font-size: 13px; color: #79365C">Reste 1 flacon · seuil 3 flacons</span></span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800">Quantité <input type="number" value="5" style="font-family: inherit; width: 90px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #79365C; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"> flacons</label>
+<button type="button" aria-label="Retirer Top coat brillant de la liste" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #79365C; background: #FFFFFF; color: #79365C; display: inline-flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 14px 0">
+<span style="flex: 1 1 220px; font-weight: 900; font-size: 17px">Capsules amande T4<span style="display: block; font-weight: 700; font-size: 13px; color: #79365C">Reste 60 pcs · seuil 100 pcs</span></span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800">Quantité <input type="number" value="200" style="font-family: inherit; width: 90px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #79365C; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"> pcs</label>
+<button type="button" aria-label="Retirer Capsules amande T4 de la liste" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #79365C; background: #FFFFFF; color: #79365C; display: inline-flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+</section>
+
+<button type="button" style="align-self: flex-start; font-family: inherit; min-height: 48px; padding: 0 22px; border-radius: 999px; background: transparent; color: #79365C; font-weight: 900; font-size: 16px; border: 3px dashed #79365C; cursor: pointer">+ Ajouter un produit hors alerte</button>
+</div>
+
+<aside style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 24px; align-items: stretch">
+<div style="align-self: center; position: relative; width: 200px; height: 200px">
+<div class="burst" style="position: absolute; inset: 0; background: #B01050; transform: rotate(-8deg)"></div>
+<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFFFFF; text-align: center; transform: rotate(-8deg)">
+<span style="font-weight: 900; font-size: 14px; text-transform: uppercase; font-style: italic">À racheter</span>
+<span style="font-family: 'Lilita One', sans-serif; font-size: 64px; line-height: 0.95">4</span>
+<span style="font-weight: 900; font-size: 14px; text-transform: uppercase">produits</span>
+</div>
+</div>
+
+<section style="background: #FFFFFF; border: 3px solid #B01050; border-radius: 26px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-weight: 900; font-size: 20px; color: #430D2B; text-transform: uppercase; font-style: italic">Télécharge-la</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" style="flex: 1 1 110px; font-family: inherit; min-height: 48px; border-radius: 999px; background: #F6BE28; color: #270317; font-weight: 900; font-size: 16px; border: 3px solid #270317; cursor: pointer">CSV</button>
+<button type="button" style="flex: 1 1 110px; font-family: inherit; min-height: 48px; border-radius: 999px; background: #F6BE28; color: #270317; font-weight: 900; font-size: 16px; border: 3px solid #270317; cursor: pointer">PDF</button>
+</div>
+</section>
+
+<section style="position: relative; background: #FFFFFF; border: 3px solid #430D2B; border-radius: 26px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<div class="star" aria-hidden="true" style="position: absolute; top: -22px; right: -16px; width: 52px; height: 52px; background: #F6BE28"></div>
+<h2 style="margin: 0; font-weight: 900; font-size: 20px; color: #430D2B; text-transform: uppercase; font-style: italic">Ou envoie-la</h2>
+<label for="dest" style="font-weight: 800; font-size: 14px">Adresse mail</label>
+<input id="dest" type="email" value="[adresse mail de Maud]" style="font-family: inherit; font-size: 16px; font-weight: 700; min-height: 48px; padding: 0 16px; border-radius: 999px; border: 3px solid #79365C; background: #FFFFFF; color: #270317; box-sizing: border-box; width: 100%">
+<p style="margin: 0; font-size: 14px; font-weight: 700; color: #79365C">Le PDF part en pièce jointe.</p>
+<button type="button" style="font-family: inherit; min-height: 52px; border-radius: 999px; background: #B01050; color: #FFFFFF; font-weight: 900; font-size: 17px; border: 3px solid #270317; box-shadow: 4px 4px 0 #270317; cursor: pointer">Envoyer la liste</button>
+<p role="status" style="margin: 0; background: #E4EB9C; color: #2D5128; font-weight: 800; font-size: 14px; border-radius: 14px; padding: 10px 14px">Exemple de confirmation : liste envoyée à 10 h 52 !</p>
+</section>
+</aside>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1440}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>INVENThair – Inventaire</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF0F6}
+a{color:#79365C}a:hover{color:#430D2B}
+.dots{background-image:radial-gradient(#CCA7BC 2.4px,transparent 2.6px);background-size:22px 22px}
+.burst{clip-path:polygon(50% 0%,61% 12%,76% 5%,79% 21%,95% 22%,89% 37%,100% 50%,89% 63%,95% 78%,79% 79%,76% 95%,61% 88%,50% 100%,39% 88%,24% 95%,21% 79%,5% 78%,11% 63%,0% 50%,11% 37%,5% 22%,21% 21%,24% 5%,39% 12%)}
+.blob{border-radius:46% 54% 38% 62% / 55% 40% 60% 45%}
+@media (max-width:640px){.wrap{padding:24px 16px !important}.logo{font-size:44px !important}}
+</style>
+</helmet>
+<div class="dots" style="min-height: 100vh; font-family: 'Nunito', sans-serif; color: #270317">
+<div class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 40px 40px 64px; display: flex; flex-direction: column; gap: 28px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px">
+<div class="logo" style="font-family: 'Lilita One', sans-serif; font-size: 56px; line-height: 1; color: #FFFFFF; -webkit-text-stroke: 3px #430D2B; text-shadow: 5px 5px 0 #430D2B">INVENT<span style="color: #F6BE28">hair</span></div>
+<nav aria-label="Navigation principale" style="display: flex; flex-wrap: wrap; gap: 10px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Accueil</a>
+<a href="Produits.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Produits</a>
+<a href="Inventaire.dc.html" aria-current="page" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #79365C; color: #FFFFFF; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Inventaire</a>
+<a href="ListeAchat.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; text-decoration: none; border: 3px solid #79365C">Liste d'achat</a>
+</nav>
+</header>
+
+<section style="position: relative; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; background: #FFFFFF; border: 4px solid #430D2B; border-radius: 28px; padding: 28px 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 480px">
+<span style="align-self: flex-start; background: #79365C; color: #FFFFFF; font-weight: 900; text-transform: uppercase; font-size: 13px; letter-spacing: 0.08em; padding: 6px 14px; border-radius: 999px">Inventaire N°7 · brouillon</span>
+<h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-size: 56px; line-height: 1; color: #79365C">Combien il t'en reste&nbsp;?</h1>
+<p style="margin: 0; font-weight: 700; font-size: 17px">Compte chaque produit et note la quantité. L'écart se calcule tout seul et tout est sauvegardé au fil de l'eau.</p>
+</div>
+<div style="flex: 0 1 300px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-weight: 900"><span>Progression</span><span style="color: #B01050">12 / 38 comptés</span></div>
+<div role="progressbar" aria-valuemin="0" aria-valuemax="38" aria-valuenow="12" aria-label="Produits comptés" style="height: 22px; border-radius: 999px; background: #FFF0F6; border: 3px solid #430D2B; overflow: hidden">
+<div style="width: 32%; height: 100%; background: #B01050"></div>
+</div>
+<span style="font-weight: 700; font-size: 14px; color: #79365C">Ouvert le sam. 24 oct. à 9 h 40</span>
+</div>
+</section>
+
+<section aria-label="Lignes d'inventaire" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 40px; background: #FFFFFF; border: 4px solid #430D2B; border-radius: 28px; padding: 12px 32px">
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0; border-bottom: 3px dotted #CCA7BC">
+<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; color: #C47914">1.</span><span style="font-weight: 900; font-style: italic; font-size: 18px; color: #B01050">Gel builder clair</span><span style="font-weight: 700; font-size: 14px; color: #79365C">en ml</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #79365C; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">T</span>Théorique : 35</span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #8DA750; color: #270317; display: inline-flex; align-items: center; justify-content: center; font-weight: 900" aria-hidden="true">C</span>Compté
+<input type="number" value="30" style="font-family: inherit; width: 84px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #8DA750; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"></label>
+<span style="background: #B01050; color: #FFFFFF; font-weight: 900; border-radius: 999px; padding: 6px 12px; font-size: 14px">Écart −5</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0; border-bottom: 3px dotted #CCA7BC">
+<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; color: #C47914">2.</span><span style="font-weight: 900; font-style: italic; font-size: 18px; color: #B01050">Base coat caoutchouc</span><span style="font-weight: 700; font-size: 14px; color: #79365C">en flacons</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #79365C; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">T</span>Théorique : 4</span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #8DA750; color: #270317; display: inline-flex; align-items: center; justify-content: center; font-weight: 900" aria-hidden="true">C</span>Compté
+<input type="number" value="4" style="font-family: inherit; width: 84px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #8DA750; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"></label>
+<span style="background: #2D5128; color: #FFFFFF; font-weight: 900; border-radius: 999px; padding: 6px 12px; font-size: 14px">Pile poil !</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0; border-bottom: 3px dotted #CCA7BC">
+<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; color: #C47914">3.</span><span style="font-weight: 900; font-style: italic; font-size: 18px; color: #B01050">Capsules amande T4</span><span style="font-weight: 700; font-size: 14px; color: #79365C">en pièces</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #79365C; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">T</span>Théorique : 60</span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #8DA750; color: #270317; display: inline-flex; align-items: center; justify-content: center; font-weight: 900" aria-hidden="true">C</span>Compté
+<input type="number" value="72" style="font-family: inherit; width: 84px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px solid #8DA750; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"></label>
+<span style="background: #8DA750; color: #270317; font-weight: 900; border-radius: 999px; padding: 6px 12px; font-size: 14px">Écart +12</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0; border-bottom: 3px dotted #CCA7BC">
+<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; color: #C47914">4.</span><span style="font-weight: 900; font-style: italic; font-size: 18px; color: #B01050">Limes 180/240</span><span style="font-weight: 700; font-size: 14px; color: #79365C">en pièces</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #79365C; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">T</span>Théorique : 12</span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #8DA750; color: #270317; display: inline-flex; align-items: center; justify-content: center; font-weight: 900" aria-hidden="true">C</span>Compté
+<input type="number" placeholder="?" style="font-family: inherit; width: 84px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px dashed #B01050; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"></label>
+<span style="background: #FFFFFF; color: #B01050; font-weight: 900; border-radius: 999px; padding: 4px 12px; font-size: 14px; border: 2px solid #B01050">À compter</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0">
+<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; color: #C47914">5.</span><span style="font-weight: 900; font-style: italic; font-size: 18px; color: #B01050">Primer sans acide</span><span style="font-weight: 700; font-size: 14px; color: #79365C">en flacons</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #79365C; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">T</span>Théorique : 6</span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #8DA750; color: #270317; display: inline-flex; align-items: center; justify-content: center; font-weight: 900" aria-hidden="true">C</span>Compté
+<input type="number" placeholder="?" style="font-family: inherit; width: 84px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px dashed #B01050; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"></label>
+<span style="background: #FFFFFF; color: #B01050; font-weight: 900; border-radius: 999px; padding: 4px 12px; font-size: 14px; border: 2px solid #B01050">À compter</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0">
+<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; color: #C47914">6.</span><span style="font-weight: 900; font-style: italic; font-size: 18px; color: #B01050">Top coat brillant</span><span style="font-weight: 700; font-size: 14px; color: #79365C">en flacons</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #79365C; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">T</span>Théorique : 1</span>
+<label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800"><span style="width: 30px; height: 30px; border-radius: 50%; background: #8DA750; color: #270317; display: inline-flex; align-items: center; justify-content: center; font-weight: 900" aria-hidden="true">C</span>Compté
+<input type="number" placeholder="?" style="font-family: inherit; width: 84px; min-height: 44px; padding: 0 12px; border-radius: 14px; border: 3px dashed #B01050; font-size: 17px; font-weight: 900; color: #270317; box-sizing: border-box"></label>
+<span style="background: #FFFFFF; color: #B01050; font-weight: 900; border-radius: 999px; padding: 4px 12px; font-size: 14px; border: 2px solid #B01050">À compter</span>
+</div>
+</div>
+</section>
+
+<section aria-label="Résultats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px">
+<div class="blob" style="background: #79365C; color: #FFFFFF; padding: 36px 28px; text-align: center; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Lilita One', sans-serif; font-size: 26px">Plutôt moins :</span>
+<span style="font-weight: 900; font-size: 18px; color: #F6BE28">5 écarts négatifs</span>
+<span style="font-weight: 700">Des produits ont filé en douce. Ajustement à la baisse.</span>
+</div>
+<div class="blob" style="background: #8DA750; color: #FFFFFF; padding: 36px 28px; text-align: center; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Lilita One', sans-serif; font-size: 26px; color: #270317">Plutôt plus :</span>
+<span style="font-weight: 900; font-size: 18px; color: #270317">2 écarts positifs</span>
+<span style="font-weight: 700; color: #270317">Tu en avais plus que prévu. Ajustement à la hausse.</span>
+</div>
+<div class="blob" style="background: #B01050; color: #FFFFFF; padding: 36px 28px; text-align: center; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Lilita One', sans-serif; font-size: 26px">Pile poil :</span>
+<span style="font-weight: 900; font-size: 18px; color: #F6BE28">5 sans écart</span>
+<span style="font-weight: 700">Rien à corriger, bravo la gestion !</span>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; background: #F6BE28; border: 4px solid #430D2B; border-radius: 28px; padding: 24px 28px; box-shadow: 8px 8px 0 #430D2B">
+<label style="display: flex; align-items: center; gap: 12px; font-weight: 800; flex: 1 1 360px; min-height: 44px">
+<input type="checkbox" style="width: 26px; height: 26px; accent-color: #79365C">
+Garder la quantité théorique pour les 26 produits pas encore comptés
+</label>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<button type="button" style="font-family: inherit; min-height: 52px; padding: 0 22px; border-radius: 999px; background: #FFFFFF; color: #79365C; font-weight: 900; font-size: 16px; border: 3px solid #79365C; cursor: pointer">Annuler l'inventaire</button>
+<button type="button" style="font-family: inherit; min-height: 52px; padding: 0 28px; border-radius: 999px; background: #B01050; color: #FFFFFF; font-weight: 900; font-size: 17px; border: 3px solid #270317; box-shadow: 4px 4px 0 #270317; cursor: pointer">Voir le récap et valider</button>
+</div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1560}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
