@@ -21,3 +21,13 @@ def _page(request: Request, gabarit: str, page: str, titre: str, **contexte) -> 
 @router.get("/")
 def accueil(request: Request):
     return _page(request, "accueil.html", "accueil", "Accueil")
+
+
+@router.get("/produits")
+def produits(request: Request):
+    return _page(request, "produits.html", "produits", "Produits")
+
+
+@router.get("/produits/{produit_id}")
+def fiche_produit(request: Request, produit_id: int):
+    return _page(request, "fiche_produit.html", "produits", "Fiche produit", produit_id=produit_id)
