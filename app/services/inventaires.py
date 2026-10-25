@@ -145,7 +145,7 @@ def valider_inventaire(session: Session, inventaire_id: int, garder_theorique_si
             409,
             "LIGNES_NON_COMPTEES",
             f"Il reste {nb} produit{'s' if nb > 1 else ''} à compter. "
-            "Compte-les ou coche « Garder la quantité théorique ».",
+            f"Compte-{'les' if nb > 1 else 'le'} ou coche « Garder la quantité théorique ».",
             {"nb_non_comptees": nb, "produits": non_comptees},
         )
 
