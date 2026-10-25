@@ -5,7 +5,7 @@ from typing import Annotated, ClassVar, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, NaiveDatetime, StringConstraints, field_validator, model_validator
 
-from app.models import Unite
+from app.models import TypeMouvement, Unite
 
 Nom = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=80)]
 TexteCourt = Annotated[str, StringConstraints(strip_whitespace=True, max_length=200)]
@@ -216,3 +216,31 @@ class Produit(BaseModel):
     statut: StatutProduit
     cree_le: NaiveDatetime
     maj_le: NaiveDatetime
+
+
+# ---------- Mouvements ----------
+
+class MouvementCreation(Entree):
+    """Entrée ou sortie saisie par Maud ; les ajustements viennent seulement des inventaires."""
+
+    produit_id: int
+    type: Literal["entree", "sortie"]
+    quantite: float = Field(gt=0, description="Toujours positive : le signe vient du type.")
+    motif: TexteCourt | None = None
+
+    @field_validator("motif")
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+
+class Mouvement(BaseModel):
+    id: int
+    produit_id: int
+    produit_nom: str
+    unite: Unite
+    type: TypeMouvement
+    quantite: float
+    motif: str | None
+    inventaire_id: int | None
+    cree_le: NaiveDatetime
