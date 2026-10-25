@@ -1,0 +1,345 @@
+"""Objets échangés par l'API (docs/cadrage.md § 4)."""
+
+import re
+from typing import Annotated, ClassVar, Literal
+
+from pydantic import BaseModel, ConfigDict, Field, NaiveDatetime, StringConstraints, ValidationInfo, field_validator
+
+from app.models import StatutInventaire, TypeMouvement, Unite
+
+Nom = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=80)]
+TexteCourt = Annotated[str, StringConstraints(strip_whitespace=True, max_length=200)]
+TexteLong = Annotated[str, StringConstraints(strip_whitespace=True, max_length=2000)]
+Quantite = Annotated[float, Field(ge=0)]
+
+MOTIF_EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+class Entree(BaseModel):
+    """Base des corps de requête : champ inconnu = erreur 422 (ex. `stock_actuel` sur un PATCH)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class Modification(Entree):
+    """Base des PATCH : seuls les champs envoyés sont modifiés ; `null` efface un champ facultatif."""
+
+    NON_NULS: ClassVar[tuple[str, ...]] = ()
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def _refuser_null_sur_obligatoires(cls, valeur, info: ValidationInfo):
+        # Ne s'applique qu'aux champs envoyés : l'erreur est rattachée au bon champ.
+        if valeur is None and info.field_name in cls.NON_NULS:
+            raise ValueError("Ne peut pas être vide.")
+        return valeur
+
+    def changements(self) -> dict:
+        return self.model_dump(exclude_unset=True)
+
+
+def _vide_vers_none(valeur: str | None) -> str | None:
+    return valeur or None
+
+
+# ---------- Erreurs (documentation OpenAPI) ----------
+
+class DetailErreur(BaseModel):
+    code: str
+    message: str
+    details: dict = {}
+
+
+class ReponseErreur(BaseModel):
+    erreur: DetailErreur
+
+
+_DESCRIPTIONS_ERREURS = {
+    404: "INTROUVABLE",
+    409: "Conflit métier (voir le code)",
+    422: "VALIDATION, détails par champ",
+    502: "ENVOI_MAIL_ECHOUE",
+}
+
+
+def erreurs(*statuts: int) -> dict:
+    """Réponses d'erreur à documenter sur une route ; 422 est toujours possible."""
+    return {s: {"model": ReponseErreur, "description": _DESCRIPTIONS_ERREURS[s]} for s in sorted({*statuts, 422})}
+
+
+# ---------- Santé ----------
+
+class Sante(BaseModel):
+    status: Literal["ok"] = "ok"
+
+
+class Sauvegarde(BaseModel):
+    fichier: str = Field(description="Nom du fichier créé dans le dossier backups/")
+
+
+# ---------- Catégories ----------
+
+class Couleur(BaseModel):
+    r: int = Field(ge=0, le=255)
+    g: int = Field(ge=0, le=255)
+    b: int = Field(ge=0, le=255)
+    a: float = Field(default=1.0, ge=0.2, le=1.0)
+
+
+COULEUR_PAR_DEFAUT = Couleur(r=176, g=16, b=80, a=1.0)  # pivoine
+
+
+class CategorieCreation(Entree):
+    nom: Nom
+    couleur: Couleur = COULEUR_PAR_DEFAUT
+
+
+class CategorieModification(Modification):
+    NON_NULS = ("nom", "couleur", "ordre")
+
+    nom: Nom | None = None
+    couleur: Couleur | None = None
+    ordre: int | None = Field(default=None, ge=0)
+
+
+class Reordonnancement(Entree):
+    ids: list[int] = Field(min_length=1)
+
+
+class Categorie(BaseModel):
+    id: int
+    nom: str
+    couleur: Couleur
+    ordre: int
+    nb_produits: int
+    cree_le: NaiveDatetime
+
+
+# ---------- Fournisseurs ----------
+
+class _ChampsFournisseur(Entree):
+    @field_validator("email", "site_url", "notes", check_fields=False)
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+    @field_validator("email", check_fields=False)
+    @classmethod
+    def _email(cls, valeur):
+        if valeur is not None and not MOTIF_EMAIL.match(valeur):
+            raise ValueError("Adresse mail invalide.")
+        return valeur
+
+
+class FournisseurCreation(_ChampsFournisseur):
+    nom: Nom
+    email: TexteCourt | None = None
+    site_url: TexteCourt | None = None
+    notes: TexteLong | None = None
+
+
+class FournisseurModification(_ChampsFournisseur, Modification):
+    NON_NULS = ("nom",)
+
+    nom: Nom | None = None
+    email: TexteCourt | None = None
+    site_url: TexteCourt | None = None
+    notes: TexteLong | None = None
+
+
+class Fournisseur(BaseModel):
+    id: int
+    nom: str
+    email: str | None
+    site_url: str | None
+    notes: str | None
+    nb_produits: int
+    cree_le: NaiveDatetime
+
+
+# ---------- Produits ----------
+
+StatutProduit = Literal["en_forme", "a_surveiller", "alerte"]
+
+
+class _ChampsProduit(Entree):
+    @field_validator("reference", check_fields=False)
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+
+class ProduitCreation(_ChampsProduit):
+    nom: Nom
+    reference: TexteCourt | None = None
+    categorie_id: int
+    fournisseur_id: int | None = None
+    unite: Unite
+    seuil_alerte: Quantite
+    qte_reappro: Quantite
+    prix_unitaire: Quantite | None = None
+    stock_initial: Quantite | None = None
+
+
+class ProduitModification(_ChampsProduit, Modification):
+    NON_NULS = ("nom", "categorie_id", "unite", "seuil_alerte", "qte_reappro")
+
+    nom: Nom | None = None
+    reference: TexteCourt | None = None
+    categorie_id: int | None = None
+    fournisseur_id: int | None = None
+    unite: Unite | None = None
+    seuil_alerte: Quantite | None = None
+    qte_reappro: Quantite | None = None
+    prix_unitaire: Quantite | None = None
+
+
+class Archivage(Entree):
+    motif: TexteCourt | None = None
+
+    @field_validator("motif")
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+
+class Produit(BaseModel):
+    id: int
+    nom: str
+    reference: str | None
+    categorie_id: int
+    fournisseur_id: int | None
+    unite: Unite
+    stock_actuel: float
+    seuil_alerte: float
+    qte_reappro: float
+    prix_unitaire: float | None
+    archive: bool
+    archive_motif: str | None
+    archive_le: NaiveDatetime | None
+    en_alerte: bool
+    statut: StatutProduit
+    cree_le: NaiveDatetime
+    maj_le: NaiveDatetime
+
+
+# ---------- Mouvements ----------
+
+class MouvementCreation(Entree):
+    """Entrée ou sortie saisie par Maud ; les ajustements viennent seulement des inventaires."""
+
+    produit_id: int
+    type: Literal["entree", "sortie"]
+    quantite: float = Field(gt=0, description="Toujours positive : le signe vient du type.")
+    motif: TexteCourt | None = None
+
+    @field_validator("motif")
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+
+class Mouvement(BaseModel):
+    id: int
+    produit_id: int
+    produit_nom: str
+    unite: Unite
+    type: TypeMouvement
+    quantite: float
+    motif: str | None
+    inventaire_id: int | None
+    cree_le: NaiveDatetime
+
+
+# ---------- Inventaires ----------
+
+class InventaireOuverture(Entree):
+    commentaire: TexteLong | None = None
+
+    @field_validator("commentaire")
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+
+class SaisieComptage(Entree):
+    qte_comptee: float | None = Field(ge=0, description="Quantité comptée ; null efface le comptage.")
+
+
+class ValidationInventaire(Entree):
+    garder_theorique_si_vide: bool = False
+
+
+class LigneInventaire(BaseModel):
+    id: int
+    produit_id: int
+    produit_nom: str
+    unite: Unite
+    qte_theorique: float
+    qte_comptee: float | None
+    ecart: float | None
+    compte_le: NaiveDatetime | None
+
+
+class Inventaire(BaseModel):
+    id: int
+    statut: StatutInventaire
+    commentaire: str | None
+    cree_le: NaiveDatetime
+    valide_le: NaiveDatetime | None
+    nb_lignes: int
+    nb_comptees: int
+    nb_ecarts: int
+
+
+class InventaireDetail(Inventaire):
+    lignes: list[LigneInventaire]
+
+
+# ---------- Liste d'achat ----------
+# Mêmes objets en sortie (GET) et en entrée (export, envoi) : le front renvoie la liste retouchée.
+
+class LigneAchat(Entree):
+    produit_id: int
+    nom: Nom
+    unite: Unite
+    stock_actuel: float
+    seuil_alerte: float
+    quantite: Quantite
+
+
+class GroupeFournisseur(Entree):
+    fournisseur_id: int | None
+    nom: Nom
+    lignes: list[LigneAchat]
+
+
+class ListeAchat(Entree):
+    genere_le: NaiveDatetime | None = None
+    fournisseurs: list[GroupeFournisseur]
+
+
+
+class EnvoiListe(Entree):
+    destinataire: TexteCourt
+    liste: ListeAchat
+
+    @field_validator("destinataire")
+    @classmethod
+    def _email(cls, valeur):
+        if not MOTIF_EMAIL.match(valeur):
+            raise ValueError("Adresse mail invalide.")
+        return valeur
+
+
+class EnvoiConfirme(BaseModel):
+    destinataire: str
+    nb_produits: int
+    envoye_le: NaiveDatetime
+
+
+# ---------- Paramètres ----------
+
+class Parametres(BaseModel):
+    mail_destinataire_defaut: str | None
+    envoi_mail_configure: bool = Field(description="Faux tant que la partie SMTP du .env n'est pas remplie.")

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block entete %}
+<header class="entete entete-une">
+  <div>
+    <a class="logo" href="/" aria-label="INVENThair, accueil">INVENT<span>hair</span></a>
+    <p class="slogan">Le magazine du stock de ton onglerie !</p>
+  </div>
+  <p class="date-du-jour" id="date-du-jour"></p>
+</header>
+{% include "_nav.html" %}
+{% endblock %}
+
+{% block contenu %}
+<section class="une">
+  <div class="bloc-alertes" id="bloc-alertes" aria-busy="true">
+    <div class="burst sticker-alertes" id="sticker-alertes">
+      <span class="chiffre" id="nb-alertes">…</span>
+      <span id="libelle-alertes">produits<br>sous le seuil</span>
+    </div>
+    <h1 id="titre-alertes">Alerte stock !</h1>
+    <p id="texte-alertes">Clique sur un produit pour voir sa fiche, ou file direct à ta liste d'achat.</p>
+    <ul class="grille-alertes" id="grille-alertes"></ul>
+    <a class="btn btn-sombre" href="/liste-achat" style="align-self: flex-start">Voir ma liste d'achat
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+
+  <aside class="sommaire" aria-labelledby="titre-sommaire">
+    <h2 id="titre-sommaire">Au sommaire</h2>
+    <section aria-label="Exclu">
+      <span class="rubrique-italique">Exclu</span>
+      <a href="/produits#nouveau">+ Ajouter un produit</a>
+      <a href="/produits#mouvement">Enregistrer une réception</a>
+    </section>
+    <section aria-label="Enquête">
+      <span class="rubrique-italique">Enquête</span>
+      <a href="/inventaire" id="lien-inventaire">Lancer un inventaire</a>
+    </section>
+    <section aria-label="Shopping">
+      <span class="rubrique-italique">Shopping</span>
+      <a href="/liste-achat">Générer la liste d'achat</a>
+      <a href="/liste-achat#envoyer">Envoyer la liste par mail</a>
+    </section>
+    <section aria-label="Secret">
+      <span class="rubrique-italique">Secret</span>
+      <button type="button" class="btn-lien" id="sauvegarder">Sauvegarder ma base</button>
+    </section>
+  </aside>
+</section>
+
+<section class="chiffres" aria-label="Chiffres clés">
+  <div class="chiffre-cle"><span class="chiffre" id="nb-actifs">…</span><span class="libelle">Produits actifs</span></div>
+  <div class="chiffre-cle"><span class="chiffre" id="nb-alertes-2" style="color: var(--pivoine)">…</span><span class="libelle">En alerte</span></div>
+  <div class="chiffre-cle"><span class="chiffre" id="dernier-inventaire" style="color: var(--sapin)">…</span><span class="libelle">Dernier inventaire</span></div>
+  <div class="chiffre-cle"><a class="chiffre" id="nb-archives" href="/produits?onglet=archives" style="text-decoration: none">…</a><span class="libelle">Produits archivés</span></div>
+</section>
+
+<section class="carte" aria-labelledby="titre-potins">
+  <h2 id="titre-potins" class="titre-section">Les derniers potins du stock</h2>
+  <ul class="potins" id="potins" aria-busy="true"></ul>
+</section>
+
+<section class="legende" aria-label="Légende des statuts">
+  <div style="background: var(--sapin)"><span class="titre">Plutôt vert :</span><span class="statut">En forme</span><span class="explication">Stock au-dessus de 1,5 × le seuil, rien à faire.</span></div>
+  <div style="background: var(--mauve)"><span class="titre">Plutôt mauve :</span><span class="statut">À surveiller</span><span class="explication">Moins de 1,5 × le seuil, ça baisse vite.</span></div>
+  <div style="background: var(--pivoine)"><span class="titre">Plutôt rose :</span><span class="statut">Alerte !</span><span class="explication">Au seuil ou en dessous, direction la liste d'achat.</span></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/accueil.js?v={{ version }}"></script>
+{% endblock %}

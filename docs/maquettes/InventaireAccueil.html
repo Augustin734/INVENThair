@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVENThair – Inventaire (aucun en cours)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquettes.css">
+<style>
+.lancer { position: relative; display: flex; flex-wrap: wrap; gap: 28px; align-items: center; }
+.lancer-texte { flex: 999 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.lancer h1 { margin: 0; font-family: var(--police-titre); font-weight: 400; font-size: 56px; line-height: 1; color: var(--prune); text-wrap: balance; }
+.lancer .burst { flex: 0 0 auto; width: 190px; height: 190px; transform: rotate(-8deg); }
+.numeros { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.numeros li { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding: 16px 0; border-bottom: 2px dotted var(--rose-vif); }
+.numeros li:last-child { border-bottom: none; }
+.numeros .num { font-family: var(--police-titre); font-size: 30px; color: var(--caramel); min-width: 72px; }
+.numeros .quand { flex: 1 1 220px; font-weight: 800; }
+.numeros .chiffres { font-weight: 800; color: var(--mauve); font-size: 14px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<!-- Maquette : page Inventaire quand aucun brouillon n'est ouvert (US8). Avec un brouillon, la page affiche Inventaire.dc.html. -->
+<div class="wrap">
+
+<header class="entete">
+  <a class="logo" href="Main.dc.html">INVENT<span>hair</span></a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="Main.dc.html">Accueil</a>
+    <a href="Produits.dc.html">Produits</a>
+    <a href="InventaireAccueil.html" aria-current="page">Inventaire</a>
+    <a href="ListeAchat.dc.html">Liste d'achat</a>
+  </nav>
+</header>
+
+<section class="carte carte-soleil carte-ombre lancer" aria-labelledby="titre-lancer">
+  <div class="lancer-texte">
+    <span class="rubrique-italique">Enquête</span>
+    <h1 id="titre-lancer">Prête pour le grand comptage&nbsp;?</h1>
+    <p style="margin: 0; font-size: 17px; max-width: 520px">On note le stock théorique de tes 38 produits actifs. Tu comptes à ton rythme : chaque ligne est sauvegardée dès que tu la remplis, tu peux t'arrêter et reprendre plus tard.</p>
+    <div class="ligne">
+      <a class="btn btn-primaire" href="Inventaire.dc.html">Lancer l'inventaire N°7</a>
+      <span style="font-weight: 800; color: var(--prune)">Dernier inventaire : sam. 3 oct.</span>
+    </div>
+  </div>
+  <div class="burst" role="img" aria-label="38 produits à compter">
+    <span class="chiffre" style="font-size: 60px">38</span>
+    <span style="font-weight: 900; font-size: 13px; text-transform: uppercase; line-height: 1.1">produits<br>à compter</span>
+  </div>
+</section>
+
+<section class="carte" aria-labelledby="titre-numeros">
+  <h2 id="titre-numeros" class="titre-section">Les anciens numéros</h2>
+  <ul class="numeros">
+    <li>
+      <span class="num">N°6</span>
+      <span class="quand">Validé le sam. 3 oct. à 11 h 15</span>
+      <span class="pastille p-valide">Validé</span>
+      <span class="chiffres">38 produits · 7 ajustements</span>
+      <a class="btn btn-discret btn-petit" href="InventaireRecap.html">Voir le détail</a>
+    </li>
+    <li>
+      <span class="num">N°5</span>
+      <span class="quand">Ouvert le sam. 12 sept., annulé le même jour</span>
+      <span class="pastille p-annule">Annulé</span>
+      <span class="chiffres">36 produits · aucun ajustement</span>
+      <a class="btn btn-discret btn-petit" href="InventaireRecap.html">Voir le détail</a>
+    </li>
+    <li>
+      <span class="num">N°4</span>
+      <span class="quand">Validé le sam. 5 sept. à 10 h 02</span>
+      <span class="pastille p-valide">Validé</span>
+      <span class="chiffres">35 produits · 4 ajustements</span>
+      <a class="btn btn-discret btn-petit" href="InventaireRecap.html">Voir le détail</a>
+    </li>
+  </ul>
+  <p class="aide">Un inventaire validé ou annulé se consulte en lecture seule : mêmes lignes que l'écran de comptage, sans champ de saisie.</p>
+</section>
+
+</div>
+</body>
+</html>

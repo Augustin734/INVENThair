@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block contenu %}
+<section class="pile" style="gap: 6px">
+  <h1 class="titre-shopping">Ta liste de shopping</h1>
+  <p class="sous-titre" id="genere-le">…</p>
+</section>
+
+<div class="colonnes-achat">
+  <div class="colonne-principale" id="groupes" aria-busy="true"></div>
+
+  <aside class="colonne-laterale" aria-label="Télécharger ou envoyer">
+    <div class="burst sticker-achat" id="sticker-achat" role="img">
+      <span class="sur-titre">À racheter</span>
+      <span class="chiffre" id="nb-a-racheter">…</span>
+      <span class="sous-titre-sticker" id="libelle-a-racheter">produits</span>
+    </div>
+
+    <section class="carte-bord" aria-labelledby="titre-telecharger">
+      <h2 id="titre-telecharger" class="rubrique-italique" style="color: var(--prune)">Télécharge-la</h2>
+      <div class="ligne">
+        <button type="button" class="btn btn-secondaire bouton-export" data-format="csv">CSV</button>
+        <button type="button" class="btn btn-secondaire bouton-export" data-format="pdf">PDF</button>
+      </div>
+    </section>
+
+    <section class="carte-bord carte-prune" aria-labelledby="titre-envoyer" id="envoyer">
+      <div class="etoile" aria-hidden="true"></div>
+      <h2 id="titre-envoyer" class="rubrique-italique" style="color: var(--prune)">Ou envoie-la</h2>
+      <form id="formulaire-envoi" class="pile" novalidate>
+        <div class="champ" data-champ="destinataire">
+          <label for="destinataire">Adresse mail</label>
+          <input id="destinataire" name="destinataire" class="saisie" type="email" autocomplete="email">
+          <p class="erreur-champ" id="destinataire-erreur" hidden></p>
+        </div>
+        <p class="aide">Le PDF part en pièce jointe.</p>
+        <p class="msg msg-info" id="mail-non-configure" hidden>L'envoi par mail n'est pas encore réglé : il faut remplir la partie SMTP du fichier <code>.env</code>. Tu peux quand même télécharger la liste.</p>
+        <button type="submit" class="btn btn-primaire" id="bouton-envoyer">Envoyer la liste</button>
+        <div id="resultat-envoi" aria-live="polite"></div>
+      </form>
+    </section>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/liste_achat.js?v={{ version }}"></script>
+{% endblock %}
