@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block contenu %}
+<div id="inventaire" class="contenu" aria-busy="true"></div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/inventaire.js?v={{ version }}"></script>
+{% endblock %}
