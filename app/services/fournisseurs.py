@@ -73,7 +73,7 @@ def supprimer(session: Session, fournisseur_id: int) -> None:
             409,
             "RESSOURCE_UTILISEE",
             f"{fournisseur.nom} a encore {nb} produit{'s' if nb > 1 else ''}{precision}. "
-            "Change leur fournisseur avant de le supprimer.",
+            f"Change {'leur' if nb > 1 else 'son'} fournisseur avant de le supprimer.",
             {"nb_produits": nb, "nb_archives": nb_archives},
         )
     session.delete(fournisseur)
