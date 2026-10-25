@@ -5,7 +5,7 @@ from typing import Annotated, ClassVar, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, NaiveDatetime, StringConstraints, field_validator, model_validator
 
-from app.models import TypeMouvement, Unite
+from app.models import StatutInventaire, TypeMouvement, Unite
 
 Nom = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=80)]
 TexteCourt = Annotated[str, StringConstraints(strip_whitespace=True, max_length=200)]
@@ -244,3 +244,48 @@ class Mouvement(BaseModel):
     motif: str | None
     inventaire_id: int | None
     cree_le: NaiveDatetime
+
+
+# ---------- Inventaires ----------
+
+class InventaireOuverture(Entree):
+    commentaire: TexteLong | None = None
+
+    @field_validator("commentaire")
+    @classmethod
+    def _vide(cls, valeur):
+        return _vide_vers_none(valeur)
+
+
+class SaisieComptage(Entree):
+    qte_comptee: float | None = Field(ge=0, description="Quantité comptée ; null efface le comptage.")
+
+
+class ValidationInventaire(Entree):
+    garder_theorique_si_vide: bool = False
+
+
+class LigneInventaire(BaseModel):
+    id: int
+    produit_id: int
+    produit_nom: str
+    unite: Unite
+    qte_theorique: float
+    qte_comptee: float | None
+    ecart: float | None
+    compte_le: NaiveDatetime | None
+
+
+class Inventaire(BaseModel):
+    id: int
+    statut: StatutInventaire
+    commentaire: str | None
+    cree_le: NaiveDatetime
+    valide_le: NaiveDatetime | None
+    nb_lignes: int
+    nb_comptees: int
+    nb_ecarts: int
+
+
+class InventaireDetail(Inventaire):
+    lignes: list[LigneInventaire]
