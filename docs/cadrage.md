@@ -152,8 +152,8 @@ Base `http://localhost:8000/api/v1`, JSON en UTF-8, dates ISO 8601, champs en sn
 | GET | `/alertes` | Produits sous seuil | 200 `[Produit]` |
 | GET | `/liste-achat` | Liste groupée par fournisseur | 200 `ListeAchat` |
 | POST | `/liste-achat/export?format=csv\|pdf` | Body `ListeAchat` éventuellement retouchée | 200 fichier |
-| POST | `/liste-achat/envoyer` | Body `{destinataire, liste: ListeAchat}` | 202, 502 si SMTP KO |
-| GET | `/parametres` | Réglages utiles au front : `{mail_destinataire_defaut}` (lu dans `.env`, jamais les identifiants SMTP) | 200 |
+| POST | `/liste-achat/envoyer` | Body `{destinataire, liste: ListeAchat}` | 202 `{destinataire, nb_produits, envoye_le}`, 422 si liste vide, 502 si SMTP KO |
+| GET | `/parametres` | Réglages utiles au front : `{mail_destinataire_defaut, envoi_mail_configure}` (lus dans `.env`, jamais les identifiants SMTP) | 200 |
 | POST | `/backup` | Copie datée de la base | 201 `{fichier}` |
 | GET | `/health` | Ping | 200 `{status: "ok"}` |
 
@@ -212,6 +212,8 @@ Base `http://localhost:8000/api/v1`, JSON en UTF-8, dates ISO 8601, champs en sn
 - Export de la liste d'achat : les lignes à quantité 0 et les groupes vides sont ignorés (Maud peut mettre 0 au lieu de retirer la ligne). Le nom du fichier porte la date du jour de l'export.
 - CSV : séparateur `;`, virgule décimale, encodage UTF-8 avec BOM, unité en toutes lettres (s'ouvre tel quel dans LibreOffice ou Excel en français).
 - PDF : A4, une section par fournisseur avec son mail s'il est connu, police Helvetica intégrée à ReportLab tant que les polices de la charte ne sont pas embarquées (étape 7).
+- Mail : texte (récap par fournisseur) + PDF joint, objet « Liste d'achat du JJ/MM/AAAA ». Réglages SMTP dans `.env` (`SMTP_HOTE`, `SMTP_PORT`, `SMTP_SECURITE` = `starttls` | `ssl` | `aucune`, `SMTP_UTILISATEUR`, `SMTP_MOT_DE_PASSE`, `SMTP_EXPEDITEUR`). 502 `ENVOI_MAIL_ECHOUE` avec `details.raison` ∈ `non_configure`, `connexion`, `authentification`, `destinataire`, `refus`.
+- Sauvegarde : `backups/<nom de la base>-AAAA-MM-JJ-HHMMSS.db` à côté de la base, par l'API de sauvegarde de SQLite. `POST /backup` renvoie le nom du fichier. Pas de rotation automatique en V1.
 - `Produit` ne contient ni le nom de la catégorie ni celui du fournisseur : le front les joint depuis `/categories` et `/fournisseurs`, déjà chargés pour les filtres.
 - Dans `ListeAchat`, les produits sans fournisseur forment un groupe `{"fournisseur_id": null, "nom": "Sans fournisseur"}`, placé en dernier.
 
