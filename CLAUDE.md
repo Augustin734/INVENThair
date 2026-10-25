@@ -17,7 +17,8 @@ Appli web locale de gestion de stock pour une onglerie (une utilisatrice : Maud)
 - Toute variation de stock passe par une seule fonction `appliquer_mouvement()` dans `app/services/`.
 - Format d'erreur unique : `{"erreur": {"code", "message", "details"}}` avec les codes listés dans le cadrage.
 - Chaque endpoint a au moins un test pytest (cas nominal + un cas d'erreur).
-- Structure : `app/main.py`, `app/models.py`, `app/schemas.py`, `app/services/`, `app/routers/`, `app/static/`, `app/templates/`, `tests/`.
+- Structure : `app/main.py`, `app/config.py`, `app/database.py`, `app/erreurs.py`, `app/models.py`, `app/schemas.py`, `app/services/`, `app/routers/`, `app/static/`, `app/templates/`, `tests/`, `scripts/` (fonctions shell communes, modèle du raccourci `.desktop`). Les scripts de lancement sont à la racine.
+- Lever les erreurs métier avec `ErreurMetier(statut, code, message, details)` (`app/erreurs.py`) ; ne jamais construire la réponse d'erreur à la main.
 - Fin de session : `pytest` vert, `./start.sh` démarre, commit avec un message clair.
 
 ## Front et maquettes
