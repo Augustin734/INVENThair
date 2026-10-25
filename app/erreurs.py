@@ -35,6 +35,42 @@ def reponse_erreur(statut: int, code: str, message: str, details: dict[str, Any]
     )
 
 
+def _message_fr(err: dict[str, Any]) -> str:
+    """Traduit les erreurs Pydantic les plus courantes ; le front les affiche telles quelles."""
+    type_, ctx = err.get("type", ""), err.get("ctx") or {}
+    if type_ == "value_error":
+        return str(ctx.get("error", err.get("msg", "Valeur invalide")))
+    messages = {
+        "missing": "Champ obligatoire.",
+        "extra_forbidden": "Ce champ n'est pas modifiable ici.",
+        "greater_than_equal": "Doit être supérieur ou égal à {ge}.",
+        "greater_than": "Doit être supérieur à {gt}.",
+        "less_than_equal": "Doit être inférieur ou égal à {le}.",
+        "less_than": "Doit être inférieur à {lt}.",
+        "string_too_short": "Ne peut pas être vide.",
+        "string_too_long": "Trop long ({max_length} caractères maximum).",
+        "string_pattern_mismatch": "Format invalide.",
+        "int_parsing": "Doit être un nombre entier.",
+        "int_from_float": "Doit être un nombre entier.",
+        "int_type": "Doit être un nombre entier.",
+        "float_parsing": "Doit être un nombre.",
+        "float_type": "Doit être un nombre.",
+        "bool_parsing": "Doit valoir vrai ou faux.",
+        "string_type": "Doit être un texte.",
+        "list_type": "Doit être une liste.",
+        "enum": "Valeur possible : {expected}.",
+        "literal_error": "Valeur possible : {expected}.",
+        "json_invalid": "Le corps de la requête n'est pas du JSON valide.",
+    }
+    modele = messages.get(type_)
+    if modele is None:
+        return err.get("msg", "Valeur invalide")
+    try:
+        return modele.format(**ctx)
+    except (KeyError, IndexError):
+        return modele
+
+
 def _champ(loc: tuple) -> str:
     morceaux = [str(m) for m in loc if m not in ("body", "query", "path")]
     return ".".join(morceaux) or "requete"
@@ -49,7 +85,7 @@ def installer_gestionnaires(app: FastAPI) -> None:
     async def _validation(_: Request, exc: RequestValidationError) -> JSONResponse:
         details: dict[str, str] = {}
         for err in exc.errors():
-            details.setdefault(_champ(tuple(err.get("loc", ()))), err.get("msg", "Valeur invalide"))
+            details.setdefault(_champ(tuple(err.get("loc", ()))), _message_fr(err))
         return reponse_erreur(422, "VALIDATION", "Certains champs ne sont pas valides.", details)
 
     @app.exception_handler(StarletteHTTPException)
