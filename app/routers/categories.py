@@ -16,22 +16,22 @@ def lister(session: SessionDB):
     return categories.lister(session)
 
 
-@router.post("", response_model=schemas.Categorie, status_code=201, summary="Créer")
+@router.post("", response_model=schemas.Categorie, status_code=201, responses=schemas.erreurs(409), summary="Créer")
 def creer(donnees: schemas.CategorieCreation, session: SessionDB):
     return categories.creer(session, donnees)
 
 
-@router.post("/reordonner", response_model=list[schemas.Categorie], summary="Réécrire l'ordre de toutes les catégories")
+@router.post("/reordonner", response_model=list[schemas.Categorie], responses=schemas.erreurs(), summary="Réécrire l'ordre de toutes les catégories")
 def reordonner(donnees: schemas.Reordonnancement, session: SessionDB):
     return categories.reordonner(session, donnees.ids)
 
 
-@router.patch("/{categorie_id}", response_model=schemas.Categorie, summary="Modifier (nom, couleur, ordre)")
+@router.patch("/{categorie_id}", response_model=schemas.Categorie, responses=schemas.erreurs(404, 409), summary="Modifier (nom, couleur, ordre)")
 def modifier(categorie_id: int, donnees: schemas.CategorieModification, session: SessionDB):
     return categories.modifier(session, categorie_id, donnees)
 
 
-@router.delete("/{categorie_id}", status_code=204, summary="Supprimer (fusion avec ?fusionner_vers=)")
+@router.delete("/{categorie_id}", status_code=204, responses=schemas.erreurs(404, 409), summary="Supprimer (fusion avec ?fusionner_vers=)")
 def supprimer(
     categorie_id: int,
     session: SessionDB,

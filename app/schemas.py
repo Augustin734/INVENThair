@@ -41,6 +41,31 @@ def _vide_vers_none(valeur: str | None) -> str | None:
     return valeur or None
 
 
+# ---------- Erreurs (documentation OpenAPI) ----------
+
+class DetailErreur(BaseModel):
+    code: str
+    message: str
+    details: dict = {}
+
+
+class ReponseErreur(BaseModel):
+    erreur: DetailErreur
+
+
+_DESCRIPTIONS_ERREURS = {
+    404: "INTROUVABLE",
+    409: "Conflit métier (voir le code)",
+    422: "VALIDATION, détails par champ",
+    502: "ENVOI_MAIL_ECHOUE",
+}
+
+
+def erreurs(*statuts: int) -> dict:
+    """Réponses d'erreur à documenter sur une route ; 422 est toujours possible."""
+    return {s: {"model": ReponseErreur, "description": _DESCRIPTIONS_ERREURS[s]} for s in sorted({*statuts, 422})}
+
+
 # ---------- Santé ----------
 
 class Sante(BaseModel):
