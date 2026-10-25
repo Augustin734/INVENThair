@@ -32,6 +32,7 @@ INVENThair est une appli web locale qui suit le stock de matière première de l
 - **PDF** : ReportLab (pur Python, s'installe hors ligne sans bibliothèque système). **Mail** : SMTP (`smtplib`), identifiants dans `.env` lu avec `python-dotenv`.
 - **Lancement développeur** : `./start.sh` → venv, initialisation de la base, serveur au premier plan sur `http://localhost:8000` (avec rechargement auto).
 - **Lancement Maud (appli de bureau)** : voir « Installation sur le PC de Maud » plus bas. Pas de Docker (pas utile pour une appli locale à une seule utilisatrice).
+- **Dates** : heure locale du PC, sans fuseau, à la seconde (une seule machine).
 - **Base** : pas d'outil de migration en V1. Au démarrage, `SQLModel.metadata.create_all()` crée les tables manquantes, puis les catégories de départ sont insérées si la table est vide (idempotent).
 - **Tests** : pytest + `httpx` (TestClient FastAPI) sur l'API.
 
@@ -49,7 +50,7 @@ INVENThair est une appli web locale qui suit le stock de matière première de l
 
 ### Installation sur le PC de Maud
 
-- `./install.sh` (une seule fois, ou après une mise à jour) : crée le venv, installe les dépendances, initialise la base, puis installe le raccourci `inventhair.desktop` (icône `app/static/icone.png`) dans `~/.local/share/applications/` et sur le Bureau (`xdg-user-dir DESKTOP`, marqué comme fiable avec `gio set … metadata::trusted true`).
+- `./install.sh` (une seule fois, ou après une mise à jour) : crée le venv, installe les dépendances, initialise la base, puis installe le raccourci `inventhair.desktop` (icône `app/static/icone.svg`) dans `~/.local/share/applications/` et sur le Bureau (`xdg-user-dir DESKTOP`, marqué comme fiable avec `gio set … metadata::trusted true`).
 - Le raccourci lance `./lancer.sh` : si `GET /health` ne répond pas, il démarre le serveur en arrière-plan (journaux dans `logs/inventhair.log`, fichier PID dans `logs/`), attend que `/health` réponde (10 s maximum, sinon message d'erreur via `notify-send`), puis ouvre l'appli dans une fenêtre dédiée (`chromium --app=…` ou `google-chrome --app=…` s'ils existent, sinon le navigateur par défaut via `xdg-open`). Un second double-clic rouvre simplement la fenêtre.
 - Le serveur tourne jusqu'à la fermeture de session ; `./stop.sh` l'arrête. Il écoute uniquement sur 127.0.0.1.
 - `./desinstaller.sh` retire les raccourcis (la base et les sauvegardes restent).
@@ -211,6 +212,8 @@ Toujours le même format : `{"erreur": {"code": "STOCK_INSUFFISANT", "message": 
 | 409 | `STOCK_INSUFFISANT`, `INVENTAIRE_EN_COURS`, `INVENTAIRE_VERROUILLE`, `LIGNES_NON_COMPTEES`, `RESSOURCE_UTILISEE`, `NOM_DEJA_UTILISE`, `PRODUIT_ARCHIVE` |
 | 422 | `VALIDATION` (détails par champ) |
 | 502 | `ENVOI_MAIL_ECHOUE` |
+
+Codes techniques renvoyés par le framework, hors règles métier : `METHODE_NON_AUTORISEE` (405), `ERREUR_INTERNE` (500, détail dans `logs/inventhair.log`, jamais dans la réponse).
 
 ## 5. Étapes
 

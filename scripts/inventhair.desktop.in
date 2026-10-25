@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=INVENThair
+GenericName=Gestion de stock
+Comment=Le stock de ton onglerie
+Exec="@RACINE@/lancer.sh"
+Icon=@RACINE@/app/static/icone.svg
+Terminal=false
+StartupNotify=true
+Categories=Office;
+Keywords=stock;onglerie;inventaire;
