@@ -12,7 +12,7 @@ from fastapi.templating import Jinja2Templates
 from app.config import lire_reglages
 from app.database import creer_moteur, initialiser_base
 from app.erreurs import installer_gestionnaires
-from app.routers import categories, fournisseurs, produits, sante
+from app.routers import categories, fournisseurs, mouvements, produits, sante
 
 DOSSIER_APP = Path(__file__).resolve().parent
 PREFIXE_API = "/api/v1"
@@ -39,6 +39,7 @@ def creer_app(chemin_base: Path | None = None) -> FastAPI:
     app.include_router(categories.router, prefix=PREFIXE_API)
     app.include_router(fournisseurs.router, prefix=PREFIXE_API)
     app.include_router(produits.router, prefix=PREFIXE_API)
+    app.include_router(mouvements.router, prefix=PREFIXE_API)
 
     app.mount("/static", StaticFiles(directory=DOSSIER_APP / "static"), name="static")
     gabarits = Jinja2Templates(directory=DOSSIER_APP / "templates")

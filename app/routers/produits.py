@@ -5,7 +5,7 @@ from sqlmodel import Session
 
 from app import schemas
 from app.database import obtenir_session
-from app.services import produits
+from app.services import mouvements, produits
 
 router = APIRouter(prefix="/produits", tags=["Produits"])
 SessionDB = Annotated[Session, Depends(obtenir_session)]
@@ -45,3 +45,8 @@ def archiver(produit_id: int, session: SessionDB, donnees: schemas.Archivage | N
 @router.post("/{produit_id}/desarchiver", response_model=schemas.Produit, responses=schemas.erreurs(404), summary="Désarchiver")
 def desarchiver(produit_id: int, session: SessionDB):
     return produits.desarchiver(session, produit_id)
+
+
+@router.get("/{produit_id}/mouvements", response_model=list[schemas.Mouvement], responses=schemas.erreurs(404), summary="Historique, du plus récent au plus ancien")
+def historique(produit_id: int, session: SessionDB):
+    return mouvements.historique(session, produit_id)
