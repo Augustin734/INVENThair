@@ -72,6 +72,10 @@ class Sante(BaseModel):
     status: Literal["ok"] = "ok"
 
 
+class Sauvegarde(BaseModel):
+    fichier: str = Field(description="Nom du fichier créé dans le dossier backups/")
+
+
 # ---------- Catégories ----------
 
 class Couleur(BaseModel):
