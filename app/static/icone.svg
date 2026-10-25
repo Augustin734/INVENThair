@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="INVENThair">
+  <rect x="12" y="12" width="232" height="232" rx="56" fill="#FFF0F6" stroke="#430D2B" stroke-width="12"/>
+  <rect x="100" y="38" width="56" height="62" rx="12" fill="#430D2B"/>
+  <rect x="112" y="96" width="32" height="18" fill="#430D2B"/>
+  <path d="M74 150c0-24 20-40 54-40s54 16 54 40v40c0 16-12 28-28 28h-52c-16 0-28-12-28-28z" fill="#B01050" stroke="#430D2B" stroke-width="10"/>
+  <rect x="94" y="138" width="14" height="50" rx="7" fill="#FCD4E6"/>
+  <path d="M196 40l7 18 19 1-15 12 5 19-16-11-16 11 5-19-15-12 19-1z" fill="#F6BE28" stroke="#430D2B" stroke-width="4" stroke-linejoin="round"/>
+</svg>
