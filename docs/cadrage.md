@@ -205,6 +205,10 @@ Base `http://localhost:8000/api/v1`, JSON en UTF-8, dates ISO 8601, champs en sn
 - Une `categorie_id` ou un `fournisseur_id` inexistant dans un corps de requête donne 422 `VALIDATION` sur ce champ, pas 404.
 - Les corps de requête refusent les champs inconnus (422) : c'est ce qui empêche de modifier `stock_actuel` par `PATCH /produits/{id}`.
 - Les textes sont nettoyés (espaces en trop) et une chaîne vide sur un champ facultatif vaut `null`.
+- `POST /inventaires` accepte un corps facultatif `{commentaire?}`. Les lignes d'un `InventaireDetail` sont triées par nom de produit. `nb_ecarts` compte les lignes comptées dont l'écart ≠ 0.
+- Les ajustements d'inventaire portent le motif « Inventaire N°{id} » et `inventaire_id`.
+- 409 `LIGNES_NON_COMPTEES` : `details = {nb_non_comptees, produits: [noms]}`. 409 `STOCK_INSUFFISANT` à la validation : `details = {lignes: [{ligne_id, produit_id, produit_nom, stock_actuel, ecart}]}` (toutes les lignes fautives).
+- Un inventaire annulé garde ses lignes (consultables) et `valide_le` reste `null`.
 - `Produit` ne contient ni le nom de la catégorie ni celui du fournisseur : le front les joint depuis `/categories` et `/fournisseurs`, déjà chargés pour les filtres.
 - Dans `ListeAchat`, les produits sans fournisseur forment un groupe `{"fournisseur_id": null, "nom": "Sans fournisseur"}`, placé en dernier.
 
