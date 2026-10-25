@@ -4,15 +4,13 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 from app.config import lire_reglages
 from app.database import creer_moteur, initialiser_base
 from app.erreurs import installer_gestionnaires
-from app.routers import categories, fournisseurs, inventaires, liste_achat, mouvements, outils, produits, sante
+from app.routers import categories, fournisseurs, inventaires, liste_achat, mouvements, outils, pages, produits, sante
 
 DOSSIER_APP = Path(__file__).resolve().parent
 PREFIXE_API = "/api/v1"
@@ -45,12 +43,8 @@ def creer_app(chemin_base: Path | None = None) -> FastAPI:
     app.include_router(liste_achat.router, prefix=PREFIXE_API)
     app.include_router(outils.router, prefix=PREFIXE_API)
 
+    app.include_router(pages.router)
     app.mount("/static", StaticFiles(directory=DOSSIER_APP / "static"), name="static")
-    gabarits = Jinja2Templates(directory=DOSSIER_APP / "templates")
-
-    @app.get("/", response_class=HTMLResponse, include_in_schema=False)
-    def accueil(request: Request) -> HTMLResponse:
-        return gabarits.TemplateResponse(request, "index.html")
 
     return app
 

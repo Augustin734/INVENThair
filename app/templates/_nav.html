@@ -1,0 +1,5 @@
+<nav class="nav" aria-label="Navigation principale">
+  {% for cle, libelle, url in [("accueil", "Accueil", "/"), ("produits", "Produits", "/produits"), ("inventaire", "Inventaire", "/inventaire"), ("liste-achat", "Liste d'achat", "/liste-achat")] %}
+  <a href="{{ url }}"{% if page == cle %} aria-current="page"{% endif %}>{{ libelle }}</a>
+  {% endfor %}
+</nav>
