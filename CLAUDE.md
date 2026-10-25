@@ -31,6 +31,9 @@ Appli web locale de gestion de stock pour une onglerie (une utilisatrice : Maud)
 - Les données dans les maquettes (produits, quantités, « Grossiste A ») sont des exemples : tout vient de l'API.
 - Polices : Lilita One (titres) et Nunito 500–900 (texte), servies en local depuis `app/static/fonts/` (woff2, licence OFL) : l'appli doit marcher hors ligne. Garder une pile de repli système derrière.
 - Accessibilité : vrais `<button>`, `<label>` sur chaque champ, cibles ≥ 44 px, contraste texte ≥ 4,5:1.
+- Organisation du front : un gabarit Jinja par page (`app/templates/`, base commune `base.html`), un module JS par page (`app/static/js/`), une fenêtre par module dans `app/static/js/fenetres/` (réutilisable d'une page à l'autre), outils partagés dans `commun.js`.
+- Construire le DOM avec `h()` / `remplir()` de `commun.js`, jamais `innerHTML` ; appeler l'API avec `api()` ; afficher les erreurs de validation avec `afficherErreurs()` (attribut `data-champ` = nom du champ dans l'API).
+- Pas de framework de test JS : chaque écran est vérifié dans un navigateur (parcours réel des fenêtres, captures 1280 px et 390 px, console sans erreur, pas de débordement horizontal) avant la PR.
 
 ## Git
 
