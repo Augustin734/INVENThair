@@ -38,3 +38,13 @@ Direction : magazine ado années 2000 (logo gonflé, pois, stickers étoile, rub
 - Cartes : fond blanc, bordure 3–4 px, rayon 22–28 px, ombre portée pleine (jamais floue).
 - Fond de page : `--fond` avec pois `--rose-pale` (radial-gradient 16 px).
 - Couleur des catégories : choisie par l'utilisatrice (RGBA). Texte de la pastille calculé : blanc ou encre selon la luminance (le plus contrasté).
+
+## Règles ajoutées (révision 2)
+
+- Statuts produit : En forme (stock > 1,5 × seuil), À surveiller (stock ≤ 1,5 × seuil), Alerte ! (stock ≤ seuil). Le statut vient de l'API (`statut`).
+- Écarts d'inventaire : négatif = pastille pivoine texte blanc, positif = pastille asperge texte encre, zéro = « Pile poil ! » sapin texte blanc, non compté = « À compter » contour pivoine.
+- Types de mouvement : Entrée (sapin), Sortie (pivoine), Ajustement (soleil, bordure encre).
+- Cibles cliquables ≥ 44 px partout, même quand une maquette `.dc.html` montre plus petit.
+- Fond de page identique sur toutes les pages : `--fond` + pois `--rose-pale` 16 px.
+- Fenêtres (modales) : voile `rgba(39, 3, 23, 0.6)`, carte blanche bordure 4 px prune, rayon 30 px, ombre pleine 10 px prune, sticker étoile soleil en haut à gauche, onglet de rubrique pivoine au-dessus du titre, bouton fermer rond 48 px.
+- Messages : succès = fond `--mindaro`, texte `--sapin` ; erreur = fond `--rose-pale`, bordure pivoine, texte `--erreur`. Toujours `role="status"` ou `role="alert"`.
