@@ -1,0 +1,12 @@
+# Environnement Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Données locales (jamais dans Git)
+.env
+inventhair.db
+inventhair.db-*
+backups/
+logs/
