@@ -209,6 +209,9 @@ Base `http://localhost:8000/api/v1`, JSON en UTF-8, dates ISO 8601, champs en sn
 - Les ajustements d'inventaire portent le motif « Inventaire N°{id} » et `inventaire_id`.
 - 409 `LIGNES_NON_COMPTEES` : `details = {nb_non_comptees, produits: [noms]}`. 409 `STOCK_INSUFFISANT` à la validation : `details = {lignes: [{ligne_id, produit_id, produit_nom, stock_actuel, ecart}]}` (toutes les lignes fautives).
 - Un inventaire annulé garde ses lignes (consultables) et `valide_le` reste `null`.
+- Export de la liste d'achat : les lignes à quantité 0 et les groupes vides sont ignorés (Maud peut mettre 0 au lieu de retirer la ligne). Le nom du fichier porte la date du jour de l'export.
+- CSV : séparateur `;`, virgule décimale, encodage UTF-8 avec BOM, unité en toutes lettres (s'ouvre tel quel dans LibreOffice ou Excel en français).
+- PDF : A4, une section par fournisseur avec son mail s'il est connu, police Helvetica intégrée à ReportLab tant que les polices de la charte ne sont pas embarquées (étape 7).
 - `Produit` ne contient ni le nom de la catégorie ni celui du fournisseur : le front les joint depuis `/categories` et `/fournisseurs`, déjà chargés pour les filtres.
 - Dans `ListeAchat`, les produits sans fournisseur forment un groupe `{"fournisseur_id": null, "nom": "Sans fournisseur"}`, placé en dernier.
 

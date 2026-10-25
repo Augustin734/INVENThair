@@ -289,3 +289,26 @@ class Inventaire(BaseModel):
 
 class InventaireDetail(Inventaire):
     lignes: list[LigneInventaire]
+
+
+# ---------- Liste d'achat ----------
+# Mêmes objets en sortie (GET) et en entrée (export, envoi) : le front renvoie la liste retouchée.
+
+class LigneAchat(Entree):
+    produit_id: int
+    nom: Nom
+    unite: Unite
+    stock_actuel: float
+    seuil_alerte: float
+    quantite: Quantite
+
+
+class GroupeFournisseur(Entree):
+    fournisseur_id: int | None
+    nom: Nom
+    lignes: list[LigneAchat]
+
+
+class ListeAchat(Entree):
+    genere_le: NaiveDatetime | None = None
+    fournisseurs: list[GroupeFournisseur]
