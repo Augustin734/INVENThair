@@ -38,6 +38,6 @@ Appli web locale de gestion de stock pour une onglerie (une utilisatrice : Maud)
 - `dev` = branche d'intégration. Tout part de `dev` et y revient.
 - Une branche par sujet, créée depuis `dev` à jour : `feat/<sujet>` (ex. `feat/etape-2-categories`), `fix/<sujet>`, `docs/<sujet>`, `chore/<sujet>`, `test/<sujet>`.
 - Commits petits et cohérents, format Conventional Commits en français : `feat(produits): archivage avec motif`, `fix(inventaire): …`, `docs: …`, `test: …`, `chore: …`. Corps du message pour le « pourquoi » si utile.
-- Push régulier de la branche. À la fin du sujet : `pytest` vert, puis PR vers `dev` avec `gh pr create` (résumé, US couvertes, comment tester), merge (sans squash) et suppression de la branche.
+- Push régulier de la branche. À la fin du sujet : `pytest` vert, puis PR vers `dev` avec `gh pr create` (résumé, US couvertes, comment tester). **Augustin relit et fusionne lui-même** : ne jamais lancer `gh pr merge`. Après sa fusion, mettre `dev` à jour et supprimer la branche locale.
 - Jamais de force-push sur `main` ni `dev`. Ne jamais committer `.env`, `inventhair.db`, `backups/`, `logs/`, `.venv/`.
 

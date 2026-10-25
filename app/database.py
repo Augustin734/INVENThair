@@ -8,6 +8,7 @@ Lancer `python -m app.database` initialise la base sans démarrer le serveur.
 from collections.abc import Iterator
 from pathlib import Path
 
+from fastapi import Request
 from sqlalchemy import Engine, event
 from sqlmodel import Session, SQLModel, create_engine, select
 
@@ -47,8 +48,9 @@ def initialiser_base(moteur: Engine) -> None:
             session.commit()
 
 
-def sessions(moteur: Engine) -> Iterator[Session]:
-    with Session(moteur) as session:
+def obtenir_session(request: Request) -> Iterator[Session]:
+    """Dépendance FastAPI : une session par requête."""
+    with Session(request.app.state.moteur) as session:
         yield session
 
 

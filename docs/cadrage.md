@@ -199,6 +199,12 @@ Base `http://localhost:8000/api/v1`, JSON en UTF-8, dates ISO 8601, champs en sn
 ```
 
 - `quantite` dans `POST /mouvements` est toujours positive : le serveur applique le signe selon `type`.
+- `nb_produits` (catégories, fournisseurs) compte aussi les produits archivés, puisqu'ils bloquent la suppression.
+- Un produit archivé a toujours `en_alerte: false` ; son `statut` reste calculé sur le stock, pour information.
+- Archiver un produit déjà archivé ne change que le motif (s'il est fourni). Désarchiver efface le motif et la date d'archivage.
+- Une `categorie_id` ou un `fournisseur_id` inexistant dans un corps de requête donne 422 `VALIDATION` sur ce champ, pas 404.
+- Les corps de requête refusent les champs inconnus (422) : c'est ce qui empêche de modifier `stock_actuel` par `PATCH /produits/{id}`.
+- Les textes sont nettoyés (espaces en trop) et une chaîne vide sur un champ facultatif vaut `null`.
 - `Produit` ne contient ni le nom de la catégorie ni celui du fournisseur : le front les joint depuis `/categories` et `/fournisseurs`, déjà chargés pour les filtres.
 - Dans `ListeAchat`, les produits sans fournisseur forment un groupe `{"fournisseur_id": null, "nom": "Sans fournisseur"}`, placé en dernier.
 
