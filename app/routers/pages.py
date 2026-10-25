@@ -31,3 +31,9 @@ def produits(request: Request):
 @router.get("/produits/{produit_id}")
 def fiche_produit(request: Request, produit_id: int):
     return _page(request, "fiche_produit.html", "produits", "Fiche produit", produit_id=produit_id)
+
+
+@router.get("/inventaire")
+def inventaire(request: Request):
+    return _page(request, "inventaire.html", "inventaire", "Inventaire")
+
