@@ -7,7 +7,7 @@ source "$(dirname "$(readlink -f "$0")")/scripts/commun.sh"
 preparer_venv requirements.txt
 mkdir -p "$LOGS" "$RACINE/backups"
 initialiser_base
-chmod +x "$RACINE"/start.sh "$RACINE"/lancer.sh "$RACINE"/stop.sh "$RACINE"/desinstaller.sh
+chmod +x "$RACINE"/start.sh "$RACINE"/lancer.sh "$RACINE"/stop.sh "$RACINE"/desinstaller.sh "$RACINE"/backup.sh
 
 raccourci="$(mktemp)"
 trap 'rm -f "$raccourci"' EXIT

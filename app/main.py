@@ -12,7 +12,7 @@ from fastapi.templating import Jinja2Templates
 from app.config import lire_reglages
 from app.database import creer_moteur, initialiser_base
 from app.erreurs import installer_gestionnaires
-from app.routers import categories, fournisseurs, inventaires, liste_achat, mouvements, produits, sante
+from app.routers import categories, fournisseurs, inventaires, liste_achat, mouvements, outils, produits, sante
 
 DOSSIER_APP = Path(__file__).resolve().parent
 PREFIXE_API = "/api/v1"
@@ -23,6 +23,7 @@ def creer_app(chemin_base: Path | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def cycle_de_vie(app: FastAPI) -> AsyncIterator[None]:
+        app.state.chemin_base = chemin
         app.state.moteur = creer_moteur(chemin)
         initialiser_base(app.state.moteur)
         yield
@@ -42,6 +43,7 @@ def creer_app(chemin_base: Path | None = None) -> FastAPI:
     app.include_router(mouvements.router, prefix=PREFIXE_API)
     app.include_router(inventaires.router, prefix=PREFIXE_API)
     app.include_router(liste_achat.router, prefix=PREFIXE_API)
+    app.include_router(outils.router, prefix=PREFIXE_API)
 
     app.mount("/static", StaticFiles(directory=DOSSIER_APP / "static"), name="static")
     gabarits = Jinja2Templates(directory=DOSSIER_APP / "templates")
