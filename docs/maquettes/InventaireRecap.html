@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVENThair – Récap d'inventaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquettes.css">
+<style>
+.compteurs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.compteur { border-radius: 20px; padding: 14px 12px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
+.compteur .chiffre { font-size: 40px; }
+.compteur span:last-child { font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+.ecarts td, .ecarts th { padding-top: 10px; padding-bottom: 10px; }
+@media (max-width: 640px) { .compteurs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+<!-- Maquette : récap avant validation (US10), ouvert par « Voir le récap et valider » sur Inventaire.dc.html. Puis la confirmation d'annulation. -->
+<div class="voile">
+
+<section class="fenetre" role="dialog" aria-modal="true" aria-labelledby="titre-recap">
+  <div class="etoile" aria-hidden="true"></div>
+  <div class="fenetre-tete">
+    <div class="pile">
+      <span class="onglet-rubrique">Le récap</span>
+      <h1 id="titre-recap">On valide l'inventaire N°7&nbsp;?</h1>
+      <p>Vérifie les écarts : une fois validé, l'inventaire est verrouillé.</p>
+    </div>
+    <button type="button" class="fermer" aria-label="Fermer et reprendre le comptage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+
+  <div class="compteurs">
+    <div class="compteur" style="background: var(--pivoine); color: var(--blanc)"><span class="chiffre">5</span><span>en moins</span></div>
+    <div class="compteur" style="background: var(--asperge); color: var(--encre)"><span class="chiffre">2</span><span>en plus</span></div>
+    <div class="compteur" style="background: var(--sapin); color: var(--blanc)"><span class="chiffre">5</span><span>pile poil</span></div>
+    <div class="compteur" style="background: var(--fond); color: var(--prune); border: 3px dashed var(--mauve)"><span class="chiffre">26</span><span>pas comptés</span></div>
+  </div>
+
+  <div class="tableau-defile" style="border: 3px solid var(--prune); border-radius: 22px">
+    <table class="tableau ecarts" style="min-width: 520px">
+      <caption class="sr">Les 7 ajustements qui seront créés</caption>
+      <thead><tr><th scope="col">Produit</th><th scope="col" class="nombre">Théorique</th><th scope="col" class="nombre">Compté</th><th scope="col" class="nombre">Écart</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight: 900">Capsules amande T4</td><td class="nombre">60 pcs</td><td class="nombre">72 pcs</td><td class="nombre"><span class="pastille p-plus">+12</span></td></tr>
+        <tr><td style="font-weight: 900">Cotons démaquillants</td><td class="nombre">460 pcs</td><td class="nombre">420 pcs</td><td class="nombre"><span class="pastille p-moins">−40</span></td></tr>
+        <tr><td style="font-weight: 900">Gel builder clair</td><td class="nombre">35 ml</td><td class="nombre">30 ml</td><td class="nombre"><span class="pastille p-moins">−5</span></td></tr>
+        <tr><td style="font-weight: 900">Gel de construction rose</td><td class="nombre">120 ml</td><td class="nombre">110 ml</td><td class="nombre"><span class="pastille p-moins">−10</span></td></tr>
+        <tr><td style="font-weight: 900">Limes 100/180</td><td class="nombre">30 pcs</td><td class="nombre">27 pcs</td><td class="nombre"><span class="pastille p-moins">−3</span></td></tr>
+        <tr><td style="font-weight: 900">Primer sans acide</td><td class="nombre">6 flacons</td><td class="nombre">7 flacons</td><td class="nombre"><span class="pastille p-plus">+1</span></td></tr>
+        <tr><td style="font-weight: 900">Vernis semi-permanent nude</td><td class="nombre">4 flacons</td><td class="nombre">3 flacons</td><td class="nombre"><span class="pastille p-moins">−1</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <label class="ligne" style="font-weight: 800; min-height: 44px; flex-wrap: nowrap">
+    <input type="checkbox" checked style="width: 26px; height: 26px; accent-color: var(--mauve); flex: 0 0 auto">
+    Garder la quantité théorique pour les 26 produits pas encore comptés (aucun ajustement pour eux)
+  </label>
+
+  <p class="msg msg-info">7 ajustements vont être ajoutés à l'historique des produits, avec le motif « Inventaire N°7 ».</p>
+  <p class="msg msg-erreur" role="alert"><strong>Si la case est décochée :</strong> il reste 26 produits à compter. Compte-les ou coche « Garder la quantité théorique ».</p>
+
+  <div class="fenetre-pied">
+    <button type="button" class="btn btn-discret gauche">Je reprends le comptage</button>
+    <button type="button" class="btn btn-primaire">Valider et ajuster le stock</button>
+  </div>
+</section>
+
+<section class="fenetre etroite" role="alertdialog" aria-modal="true" aria-labelledby="titre-annul" aria-describedby="texte-annul">
+  <span class="etiquette-variante">Variante : annuler l'inventaire</span>
+  <div class="fenetre-tete" style="margin-top: -8px">
+    <div class="pile">
+      <h1 id="titre-annul" style="font-size: 36px">On oublie l'inventaire N°7&nbsp;?</h1>
+      <p id="texte-annul">Tes 12 comptages seront perdus. Le stock ne bouge pas.</p>
+    </div>
+  </div>
+  <div class="fenetre-pied">
+    <button type="button" class="btn btn-discret">Non, je continue</button>
+    <button type="button" class="btn btn-primaire">Oui, annuler l'inventaire</button>
+  </div>
+</section>
+
+<section class="fenetre etroite" aria-label="Message après validation">
+  <span class="etiquette-variante">Variante : après validation</span>
+  <p class="msg msg-succes" role="status">Inventaire N°7 validé : 7 produits ajustés. Ton stock est à jour !</p>
+</section>
+
+</div>
+</body>
+</html>

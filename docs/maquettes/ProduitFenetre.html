@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVENThair – Fenêtre produit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquettes.css">
+</head>
+<body>
+<!-- Maquette : fenêtre « Nouveau produit » (US1) et sa variante « Modifier » (US3), ouvertes depuis la page Produits. -->
+<div class="voile">
+
+<section class="fenetre" role="dialog" aria-modal="true" aria-labelledby="titre-produit">
+  <div class="etoile" aria-hidden="true"></div>
+  <div class="fenetre-tete">
+    <div class="pile">
+      <span class="onglet-rubrique">Exclu</span>
+      <h1 id="titre-produit">Nouveau produit</h1>
+      <p>Les champs marqués <span class="obligatoire">*</span> sont obligatoires.</p>
+    </div>
+    <button type="button" class="fermer" aria-label="Fermer sans enregistrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+
+  <form class="grille-form" onsubmit="return false">
+    <div class="champ large">
+      <label for="p-nom">Nom <span class="obligatoire">*</span></label>
+      <input id="p-nom" class="saisie" type="text" value="Gel builder rose nude" required>
+    </div>
+
+    <div class="champ">
+      <label for="p-ref">Référence</label>
+      <input id="p-ref" class="saisie" type="text" value="GB-RN50">
+    </div>
+
+    <div class="champ">
+      <label for="p-prix">Prix unitaire (€)</label>
+      <input id="p-prix" class="saisie" type="number" step="0.01" min="0" value="0.26">
+      <p class="aide">Par ml : facultatif.</p>
+    </div>
+
+    <div class="champ">
+      <label for="p-cat">Catégorie <span class="obligatoire">*</span></label>
+      <select id="p-cat" class="saisie">
+        <option>Gels</option>
+        <option>Vernis</option>
+        <option>Capsules</option>
+        <option>Consommables</option>
+        <option selected>+ Nouvelle catégorie…</option>
+      </select>
+    </div>
+
+    <div class="champ">
+      <label for="p-four">Fournisseur</label>
+      <select id="p-four" class="saisie">
+        <option>Aucun</option>
+        <option selected>Grossiste A</option>
+        <option>Grossiste B</option>
+        <option>+ Nouveau fournisseur…</option>
+      </select>
+    </div>
+
+    <!-- Choisir « + Nouvelle catégorie… » ouvre ce bloc sans quitter la fenêtre -->
+    <div class="encadre large" role="group" aria-labelledby="titre-nouvelle-cat">
+      <span id="titre-nouvelle-cat" class="rubrique" style="color: var(--prune)">Nouvelle catégorie</span>
+      <div class="ligne">
+        <label class="sr" for="p-cat-nom">Nom de la nouvelle catégorie</label>
+        <input id="p-cat-nom" class="saisie" type="text" value="Gels couleur" style="flex: 1 1 200px; border-color: var(--encre)">
+        <button type="button" class="btn btn-discret" style="border-color: var(--encre); color: var(--encre); padding-left: 8px"><span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 50%; background: #F070A8"></span>Couleur…</button>
+        <button type="button" class="btn btn-primaire">Créer</button>
+      </div>
+      <p class="aide" style="color: var(--prune)">Elle sera sélectionnée tout de suite. Tu pourras la ranger plus tard dans « Mes catégories ».</p>
+    </div>
+
+    <fieldset class="champ large">
+      <legend class="etiquette">Unité <span class="obligatoire">*</span></legend>
+      <div class="choix" style="margin-top: 6px">
+        <label><input type="radio" name="unite" value="piece">pièce</label>
+        <label><input type="radio" name="unite" value="ml" checked>ml</label>
+        <label><input type="radio" name="unite" value="g">g</label>
+        <label><input type="radio" name="unite" value="flacon">flacon</label>
+      </div>
+    </fieldset>
+
+    <div class="champ">
+      <label for="p-stock">Stock de départ</label>
+      <span class="avec-unite"><input id="p-stock" class="saisie" type="number" min="0" value="100"> ml</span>
+      <p class="aide">Crée une entrée « Stock initial » dans l'historique.</p>
+    </div>
+
+    <div class="champ">
+      <label for="p-reappro">Quantité à racheter <span class="obligatoire">*</span></label>
+      <span class="avec-unite"><input id="p-reappro" class="saisie" type="number" min="0" value="100"> ml</span>
+      <p class="aide">Proposée dans la liste d'achat.</p>
+    </div>
+
+    <div class="champ">
+      <label for="p-seuil">Seuil d'alerte <span class="obligatoire">*</span></label>
+      <span class="avec-unite"><input id="p-seuil" class="saisie" type="number" min="0" value="" aria-invalid="true" aria-describedby="p-seuil-err"> ml</span>
+      <p id="p-seuil-err" class="erreur-champ">Indique un seuil (0 si tu ne veux jamais d'alerte).</p>
+    </div>
+  </form>
+
+  <div class="fenetre-pied">
+    <button type="button" class="btn btn-discret">Annuler</button>
+    <button type="submit" class="btn btn-primaire">Ajouter le produit</button>
+  </div>
+</section>
+
+<section class="fenetre etroite" role="dialog" aria-modal="true" aria-labelledby="titre-modif">
+  <span class="etiquette-variante">Variante : modifier</span>
+  <div class="fenetre-tete" style="margin-top: -8px">
+    <div class="pile">
+      <h1 id="titre-modif" style="font-size: 36px">Modifier « Gel builder clair »</h1>
+      <p>Mêmes champs que la création, sauf le stock.</p>
+    </div>
+    <button type="button" class="fermer" aria-label="Fermer sans enregistrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="champ">
+    <label for="m-stock">Stock actuel</label>
+    <span class="avec-unite"><input id="m-stock" class="saisie" type="number" value="35" readonly> ml <span class="pastille p-alerte">Alerte !</span></span>
+    <p class="aide">Le stock bouge seulement par une réception, une sortie ou un inventaire. <a href="Mouvement.html">Enregistrer une réception / sortie</a></p>
+  </div>
+  <p class="aide">… nom, référence, catégorie, fournisseur, unité, seuil, quantité à racheter, prix …</p>
+  <div class="fenetre-pied">
+    <button type="button" class="btn btn-discret">Annuler</button>
+    <button type="button" class="btn btn-primaire">Enregistrer</button>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
