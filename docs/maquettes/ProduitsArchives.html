@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVENThair – Produits archivés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@500;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquettes.css">
+</head>
+<body>
+<!-- Maquette : page Produits, onglet « Archivés » (US4). Les onglets Actifs / Archivés s'ajoutent aussi au-dessus du tableau de Produits.dc.html. -->
+<div class="wrap">
+
+<header class="entete">
+  <a class="logo" href="Main.dc.html">INVENT<span>hair</span></a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="Main.dc.html">Accueil</a>
+    <a href="Produits.dc.html" aria-current="page">Produits</a>
+    <a href="Inventaire.dc.html">Inventaire</a>
+    <a href="ListeAchat.dc.html">Liste d'achat</a>
+  </nav>
+</header>
+
+<section class="ligne" style="gap: 24px; justify-content: space-between">
+  <div class="pile" style="gap: 6px">
+    <h1 class="titre-page">Tous tes produits</h1>
+    <p class="sous-titre">38 actifs · 4 en alerte · 2 archivés</p>
+  </div>
+  <div class="ligne">
+    <a class="btn btn-secondaire" href="Categories.dc.html">Mes catégories</a>
+    <a class="btn btn-secondaire" href="Fournisseurs.html">Mes fournisseurs</a>
+  </div>
+</section>
+
+<nav class="onglets" aria-label="Produits actifs ou archivés">
+  <a href="Produits.dc.html">Actifs <span class="pastille p-annule">38</span></a>
+  <a href="ProduitsArchives.html" aria-current="page">Archivés <span class="pastille" style="background: var(--blanc); color: var(--mauve)">2</span></a>
+</nav>
+
+<p class="msg msg-succes" role="status">« Base coat mat » est de retour dans tes produits actifs.</p>
+
+<section class="carte carte-rose" style="position: relative; padding: 22px 28px; flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 16px 28px">
+  <div class="champ" style="flex: 1 1 280px">
+    <label for="recherche">Je cherche dans les archives…</label>
+    <input id="recherche" class="saisie" type="search" placeholder="strass, lime…">
+  </div>
+  <p class="aide" style="flex: 2 1 320px; color: var(--prune)">Un produit archivé ne compte ni dans les alertes, ni dans les inventaires, ni dans la liste d'achat. Son historique reste consultable.</p>
+</section>
+
+<section class="tableau-cadre" aria-label="Produits archivés">
+  <div class="tableau-defile">
+    <table class="tableau" style="min-width: 820px">
+      <thead>
+        <tr><th scope="col">Produit</th><th scope="col">Catégorie</th><th scope="col" class="nombre">Stock restant</th><th scope="col">Archivé le</th><th scope="col">Pourquoi</th><th scope="col" style="text-align: right">Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 900"><a href="FicheProduit.html">Strass AB 2 mm</a><div class="texte-doux" style="font-size: 13px">Réf. ST-AB2</div></td>
+          <td><span class="pastille p-categorie" style="background: rgba(196, 121, 20, 0.85); color: #270317">Strass</span></td>
+          <td class="nombre" style="font-weight: 900">240 pcs</td>
+          <td>sam. 24 oct.</td>
+          <td style="font-style: italic">Les clientes n'accrochent pas</td>
+          <td style="text-align: right"><button type="button" class="btn btn-discret btn-petit">Désarchiver</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight: 900"><a href="FicheProduit.html">Vernis pailleté argent</a><div class="texte-doux" style="font-size: 13px">Réf. VP-AR</div></td>
+          <td><span class="pastille p-categorie" style="background: #2D5128; color: #FFFFFF">Vernis</span></td>
+          <td class="nombre" style="font-weight: 900">0 flacon</td>
+          <td>jeu. 10 sept.</td>
+          <td class="texte-doux">—</td>
+          <td style="text-align: right"><button type="button" class="btn btn-discret btn-petit">Désarchiver</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tableau-pied"><span>2 produits archivés</span><a href="Produits.dc.html" style="font-weight: 900">Revenir aux produits actifs</a></div>
+</section>
+
+</div>
+</body>
+</html>
