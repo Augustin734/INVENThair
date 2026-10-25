@@ -316,3 +316,29 @@ class GroupeFournisseur(Entree):
 class ListeAchat(Entree):
     genere_le: NaiveDatetime | None = None
     fournisseurs: list[GroupeFournisseur]
+
+
+
+class EnvoiListe(Entree):
+    destinataire: TexteCourt
+    liste: ListeAchat
+
+    @field_validator("destinataire")
+    @classmethod
+    def _email(cls, valeur):
+        if not MOTIF_EMAIL.match(valeur):
+            raise ValueError("Adresse mail invalide.")
+        return valeur
+
+
+class EnvoiConfirme(BaseModel):
+    destinataire: str
+    nb_produits: int
+    envoye_le: NaiveDatetime
+
+
+# ---------- Paramètres ----------
+
+class Parametres(BaseModel):
+    mail_destinataire_defaut: str | None
+    envoi_mail_configure: bool = Field(description="Faux tant que la partie SMTP du .env n'est pas remplie.")
