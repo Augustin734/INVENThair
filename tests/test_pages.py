@@ -2,7 +2,7 @@
 
 import pytest
 
-PAGES = [("/", "Accueil"), ("/produits", "Produits"), ("/produits?onglet=archives", "Produits"), ("/produits/1", "Fiche produit"), ("/inventaire", "Inventaire"), ("/inventaire?numero=1", "Inventaire")]
+PAGES = [("/", "Accueil"), ("/produits", "Produits"), ("/produits?onglet=archives", "Produits"), ("/produits/1", "Fiche produit"), ("/inventaire", "Inventaire"), ("/inventaire?numero=1", "Inventaire"), ("/liste-achat", "Liste d&#39;achat")]
 
 
 @pytest.mark.parametrize("url, titre", PAGES)
@@ -24,6 +24,7 @@ def test_page_servie(client, url, titre):
         ("/static/js/produits.js", "javascript"),
         ("/static/js/fiche_produit.js", "javascript"),
         ("/static/js/inventaire.js", "javascript"),
+        ("/static/js/liste_achat.js", "javascript"),
         ("/static/js/selecteur_couleur.js", "javascript"),
         ("/static/js/fenetres/produit.js", "javascript"),
         ("/static/js/fenetres/mouvement.js", "javascript"),

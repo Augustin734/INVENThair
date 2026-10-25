@@ -37,3 +37,7 @@ def fiche_produit(request: Request, produit_id: int):
 def inventaire(request: Request):
     return _page(request, "inventaire.html", "inventaire", "Inventaire")
 
+
+@router.get("/liste-achat")
+def liste_achat(request: Request):
+    return _page(request, "liste_achat.html", "liste-achat", "Liste d'achat")
